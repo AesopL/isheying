@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>admin</title>
+    <link rel="stylesheet" type="text/css" href="__CSS__/zui.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/theme/zui-theme-green.css">
+    <link rel="stylesheet" type="text/css" href="__CSS__/style.css">
+
+    <script type="text/javascript" src="__LIB__/jquery/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+    <script type="text/javascript" src="__JS__/zui.js"></script> {block name="style"}{/block}
+</head>
+
+
+<body>
+    <div class="main">
+        <!-- 头部 -->
+        {include file="layouts/_header"}
+        <!-- 侧边栏 -->
+        {include file="layouts/_aside"}
+        <div class="main-content">
+            <div class="wrapper">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">
+                            <i class="icon icon-home"></i> 主页</a>
+                    </li>
+                    <li>
+                        <a href="#">栏目管理</a>
+                    </li>
+                    <li class="active">栏目列表</li>
+                </ol>
+                {block name="body"} {/block}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 定义全局JS变量
+        // var url = window.location.pathname + window.location.search;
+        // 定义全局JS变量
+        var GlobalUrl = {
+            current_controller: "admin/{$controller|default=''}/",
+            base_url: "__STATIC__"
+        };
+        //console.log(GlobalUrl.current_controller);
+    </script> {block name="scriptpre"}{/block}
+    <script type="text/javascript" src="__JS__/admin.js"></script> {block name="scriptnext"}{/block}
+</body>
+
+</html>

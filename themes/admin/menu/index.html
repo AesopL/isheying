@@ -1,0 +1,274 @@
+{extend name="base" /} {block name="body"}
+<div class="panel">
+    <div class="panel-heading">
+        <h5>栏目管理</h5>
+    </div>
+    <div class="panel-body">
+        <div class="pull-right">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addMenu">添加栏目</button>
+        </div>
+        <form action="#" method="post">
+            <div class="search">
+                搜索名称：
+                <input type="text" class="text" name="topic" placeholder="搜索名称" style="width:150px;"> &nbsp;搜索分类：
+                <div class="btn-group btn-dropdown">
+                    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                        <span class="drop-topic">请选择类别</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#">请选择类别</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">分类一</a>
+                        </li>
+                        <li>
+                            <a href="#">分类二</a>
+                        </li>
+                    </ul>
+                </div>
+                &nbsp;是否启用：
+                <div class="btn-group btn-dropdown">
+                    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                        <span class="drop-topic">请选择</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#">请选择</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">启用</a>
+                        </li>
+                        <li>
+                            <a href="#">禁用</a>
+                        </li>
+                    </ul>
+                </div>
+                &nbsp;
+                <button type="submit" value="查询" class="btn btn-primary-outline btn-xs">
+                    <i class="icon-search"></i>&nbsp;查询</button>
+            </div>
+        </form>
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th width="40" class="text-center">
+                        <input type="checkbox" name="checkbox">
+                    </th>
+                    <th width="50" class="text-center">ID</th>
+                    <th width="200">栏目名称</th>
+                    <th width="200" class="text-center">控制器方法</th>
+                    <th width="100" class="text-center">是否启用</th>
+                    <th width="150" class="text-center">图标</th>
+                    <th width="140" class="text-center">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {foreach name="admin_menu_level_list" item="vo"}
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="checkbox">
+                    </td>
+                    <td class="text-center">{$vo.id}</td>
+                    <td>{neq name="vo.level" value="1"}|{php}for($i=1;$i
+                        <$vo[ 'level'];$i++){echo ' ----';}{/php}{/neq} {$vo.title} </td>
+                            <td class="text-center">{$vo.name}</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-xs {if condition='$vo.status==1'}btn-primary{/if}">启用</button>
+                                    <button type="button" class="btn btn-xs {if condition='$vo.status==0'}btn-danger{/if}">禁用</button>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <i class="{$vo.icon}"></i>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-sm btn-success btn_edit" data_id="{$vo.id}" data-toggle="modal" data-target="#editMenu">
+                                    <i class="icon-edit"></i> 编辑</button>
+                                <button type="button" class="btn btn-sm btn-danger btn-delete" data_id="{$vo.id}">
+                                    <i class="icon-trash"></i> 删除</button>
+                            </td>
+                </tr>
+                {/foreach}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th width="40" class="text-center">
+                        <input type="checkbox" name="checkbox">
+                    </th>
+                    <th colspan="8">
+                        <button type="button" class="btn btn-danger">
+                            <i class="icon-trash"></i> 删除</button>
+                        <div class="pull-right">
+                            {$page}
+                        </div>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<!-- 添加modal层 -->
+<div class="modal fade" id="addMenu">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="save" id="addForm" onsubmit="return false">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">标题</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="">上级菜单</label>
+                        <select class="form-control" name="pid">
+                            <option value="0">一级菜单</option>
+                            {foreach name="admin_menu_level_list" item="vo"}
+                            <option value="{$vo.id}">{neq name="vo.level" value="1"}|{php}for($i=1;$i
+                                <$vo[ 'level'];$i++){echo ' ----';}{/php}{/neq} {$vo.title}</option>
+                                    {/foreach}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">菜单名称</label>
+                        <input type="text" name="title" class="form-control" id="title" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">控制器方法</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="icon">图标</label>
+                        <input type="text" name="icon" class="form-control" id="icon" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">显示
+                            <input type="radio" name="status" value="1" id="icon" title="显示" checked="checked">
+                        </label>
+                        <label for="status">隐藏
+                            <input type="radio" name="status" value="0" id="status" title="隐藏">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="sort">排序</label>
+                        <input type="text" name="sort" class="form-control" id="sort" placeholder="">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="addSubmit">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑modal层 -->
+<div class="modal fade" id="editMenu">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="save" id="editForm" onsubmit="return false">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">标题</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" name="id" id="editId" hidden value="">
+                    <div class="form-group">
+                        <label for="">上级菜单</label>
+                        <select class="form-control" name="pid" id="editPid">
+                            <option value="0">一级菜单</option>
+                            {foreach name="admin_menu_level_list" item="vo"}
+                            <option value="{$vo.id}">{neq name="vo.level" value="1"}|{php}for($i=1;$i
+                                <$vo[ 'level'];$i++){echo ' ----';}{/php}{/neq} {$vo.title}</option>
+                                    {/foreach}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">菜单名称</label>
+                        <input type="text" name="title" class="form-control" id="editTitle" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">控制器方法</label>
+                        <input type="text" name="name" class="form-control" id="editName" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="icon">图标</label>
+                        <input type="text" name="icon" class="form-control" id="editIcon" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">显示
+                            <input type="radio" name="status" value="1" id="StatusShow" title="显示" checked="checked">
+                        </label>
+                        <label for="status">隐藏
+                            <input type="radio" name="status" value="0" id="StatusHide" title="隐藏">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="sort">排序</label>
+                        <input type="text" name="sort" class="form-control" id="editSort" placeholder="">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="editSubmit">保存</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+{/block} {block name="scriptnext"}
+<script src="__JS__/myfun.js"></script>
+<script type='text/javascript'>
+    $(document).ready(function () {
+        //按钮触发数据的修改
+        $(".btn_edit").on('click', function () {
+            // 根据id通过ajax获取点击列的数据
+            var id = $(this).attr('data_id');
+            $.ajax({
+                url: 'edit',
+                async: false,//同步，会阻塞操作
+                type: 'get',//GET
+                data: { id: id },
+                complete: function (msg) {
+                    //console.log('完成了');
+                },
+                success: function (result) {
+                    //console.log(result['data']);
+                    if (result.code == 200 && result.data !== '') {
+                        $('#editPid option').each(function () {
+                            if ($(this).val() == result['data']['pid']) {
+                                $(this).prop('selected', true);
+                            }
+                        });
+                        $('#editId').val(result['data']['id'])
+                        $("#editTitle").val(result['data']['title']);
+                        $("#editName").val(result['data']['name']);
+                        $("#editSort").val(result['data']['sort']);
+                        $("#editIcon").val(result['data']['icon']);
+                        if (result['data']['status'] == 0) {
+                            $("#StatusHide").attr("checked", true);
+                        }
+                    }
+                }
+            });
+        });
+
+    });
+
+
+</script> {/block}
