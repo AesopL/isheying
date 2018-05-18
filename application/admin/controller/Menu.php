@@ -14,13 +14,14 @@ class Menu extends AdminBase
     protected function _initialize()
     {
         parent::_initialize();
-        $admin_menu_list = Db('auth_rule')->order(['sort' => 'DESC', 'id' => 'ASC'])->paginate(20);
+        $admin_menu_list = Db('auth_rule')->order(['sort' => 'DESC', 'id' => 'ASC'])->select();
         $admin_menu_level_list = array2level($admin_menu_list);
         $this->auth_rule_model = new AuthRuleModel();
-        $page = $admin_menu_list->render();
-        $this->assign('page', $page);
+        //$page = $admin_menu_list->render();
+        //$this->assign('page', $page);
 
         $this->assign('admin_menu_level_list', $admin_menu_level_list);
+        //dump($admin_menu_level_list);die;
     }
 
     public function index()

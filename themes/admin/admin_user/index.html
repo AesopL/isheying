@@ -5,7 +5,7 @@
     </div>
     <div class="panel-body">
         <div class="pull-right">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#addMenu">添加栏目</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addMenu">添加管理员</button>
         </div>
         <form action="#" method="post">
             <div class="search">
@@ -60,7 +60,7 @@
                         <input type="checkbox" name="checkbox">
                     </th>
                     <th width="50" class="text-center">ID</th>
-                    <th width="200">用户名</th>
+                    <th width="200" class="text-center">用户名</th>
                     <th width="200" class="text-center">创建时间</th>
                     <th width="100" class="text-center">最后登录</th>
                     <th width="150" class="text-center">最后登录ip</th>
@@ -75,8 +75,8 @@
                     </td>
                     <td class="text-center">{$vo.id}</td>
                     <td class="text-center">{$vo.username}</td>
-                    <td class="text-center">{$vo.ctime}</td>
-                    <td class="text-center">{$vo.utime}</td>
+                    <td class="text-center">{$vo.create_at}</td>
+                    <td class="text-center">{$vo.update_at}</td>
                     <td class="text-center">{$vo.login_ip}</td>
                     <td class="text-center">
                         <button type="button" class="btn btn-sm btn-success btn_edit" data_id="{$vo.id}" data-toggle="modal" data-target="#editMenu">
@@ -105,4 +105,148 @@
         </table>
     </div>
 </div>
-{/block}
+
+<!-- 添加modal层 -->
+<div class="modal fade" id="addMenu">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="save" id="addForm" onsubmit="return false">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">标题</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="title">登录名</label>
+                        <input type="text" name="username" class="form-control" id="add_username" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">密码</label>
+                        <input type="password" name="password" class="form-control" id="add_password" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="icon">确认密码</label>
+                        <input type="password" name="confirm_password" class="form-control" id="add_confirm_password" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">启用
+                            <input type="radio" name="status" value="1" id="add_showstatus" title="显示" checked="checked">
+                        </label>
+                        <label for="status">禁用
+                            <input type="radio" name="status" value="0" id="add_hidestatus" title="隐藏">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="sort">所在组</label>
+                        <select class="form-control" name="group_id" id="add_group_id">
+                            {foreach $auth_groups as $group}
+                            <option value="{$group.id}">{$group.title}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="addSubmit">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- 编辑modal层 -->
+<div class="modal fade" id="editMenu">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="save" id="editForm" onsubmit="return false">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">标题</h4>
+                </div>
+                <div class="modal-body">
+                    <input hidden value="" name="id" id="edit_id">
+                    <div class="form-group">
+                        <label for="title">登录名</label>
+                        <input type="text" name="username" class="form-control" id="edit_username" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">密码</label>
+                        <input type="password" name="password" class="form-control" id="edit_password" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="icon">确认密码</label>
+                        <input type="password" name="confirm_password" class="form-control" id="edit_confirm_password" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">启用
+                            <input type="radio" name="status" value="1" id="edit_showstatus" title="显示" checked="checked">
+                        </label>
+                        <label for="status">禁用
+                            <input type="radio" name="status" value="0" id="edit_hidestatus" title="隐藏">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="sort">所在组</label>
+                        <select class="form-control" name="auth_group" id="edit_auth_group">
+                            {foreach $auth_groups as $group}
+                            <option value="{$group.id}">{$group.title}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="editSubmit">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{/block} {block name="scriptnext"}
+<script type='text/javascript'>
+    $(function () {
+        //按钮触发数据的修改
+        $(".btn_edit").on('click', function () {
+            // 根据id通过ajax获取点击列的数据
+            var id = $(this).attr('data_id');
+            $.ajax({
+                url: 'edit',
+                async: false,//同步，会阻塞操作
+                type: 'get',//GET
+                data: { id: id },
+                complete: function (msg) {
+                    //console.log('完成了');
+                },
+                success: function (result) {
+                    console.log(result.code);
+                    if (result.code == 200 && result.data !== '') {
+                        $('#edit_id').attr("value", result['data']['id']);
+                        $('#edit_auth_group option').each(function () {
+                            if ($(this).val() == result['data']['id']) {
+                                $(this).prop('selected', true);
+                            }
+                        });
+                        $("#edit_username").val(result['data']['username']);
+                        if (result['data']['status'] == 0) {
+                            $("#edit_hidestatus").attr("checked", true);
+                        }
+                    }
+                }
+            });
+        });
+
+    });
+
+
+</script> {/block}

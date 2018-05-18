@@ -75,175 +75,178 @@ return [
     // +----------------------------------------------------------------------
 
     // PATHINFO变量名 用于兼容模式
-    'var_pathinfo'           => 's',
+    'var_pathinfo'          => 's',
     // 兼容PATH_INFO获取
-    'pathinfo_fetch'         => ['ORIG_PATH_INFO', 'REDIRECT_PATH_INFO', 'REDIRECT_URL'],
+    'pathinfo_fetch'        => ['ORIG_PATH_INFO', 'REDIRECT_PATH_INFO', 'REDIRECT_URL'],
     // pathinfo分隔符
-    'pathinfo_depr'          => '/',
+    'pathinfo_depr'         => '/',
     // URL伪静态后缀
-    'url_html_suffix'        => 'html',
+    'url_html_suffix'       => 'html',
     // URL普通方式参数 用于自动生成
-    'url_common_param'       => false,
+    'url_common_param'      => false,
     // URL参数方式 0 按名称成对解析 1 按顺序解析
-    'url_param_type'         => 0,
+    'url_param_type'        => 0,
     // 是否开启路由
-    'url_route_on'           => true,
+    'url_route_on'          => true,
     // 路由使用完整匹配
-    'route_complete_match'   => false,
+    'route_complete_match'  => false,
     // 路由配置文件（支持配置多个）
-    'route_config_file'      => ['route'],
+    'route_config_file'     => ['route'],
     // 是否强制使用路由
-    'url_route_must'         => false,
+    'url_route_must'        => false,
     // 域名部署
-    'url_domain_deploy'      => false,
+    'url_domain_deploy'     => false,
     // 域名根，如thinkphp.cn
-    'url_domain_root'        => '',
+    'url_domain_root'       => '',
     // 是否自动转换URL中的控制器和操作名
-    'url_convert'            => true,
+    'url_convert'           => true,
     // 默认的访问控制器层
-    'url_controller_layer'   => 'controller',
+    'url_controller_layer'  => 'controller',
     // 表单请求类型伪装变量
-    'var_method'             => '_method',
+    'var_method'            => '_method',
     // 表单ajax伪装变量
-    'var_ajax'               => '_ajax',
+    'var_ajax'              => '_ajax',
     // 表单pjax伪装变量
-    'var_pjax'               => '_pjax',
+    'var_pjax'              => '_pjax',
     // 是否开启请求缓存 true自动缓存 支持设置请求缓存规则
-    'request_cache'          => false,
+    'request_cache'         => false,
     // 请求缓存有效期
-    'request_cache_expire'   => null,
+    'request_cache_expire'  => null,
     // 全局请求缓存排除规则
-    'request_cache_except'   => [],
+    'request_cache_except'  => [],
 
     // +----------------------------------------------------------------------
     // | 模板设置
     // +----------------------------------------------------------------------
 
-    'template'               => [
+    'template'              => [
         // 模板引擎类型 支持 php think 支持扩展
-        'type'         => 'Think',
+        'type'              => 'Think',
         // 默认模板渲染规则 1 解析为小写+下划线 2 全部转换小写
-        'auto_rule'    => 1,
+        'auto_rule'         => 1,
         // 模板路径
-        'view_path'    => '',
+        'view_path'         => '',
         // 模板后缀
-        'view_suffix'  => 'html',
+        'view_suffix'       => 'html',
         // 模板文件名分隔符
-        'view_depr'    => DS,
+        'view_depr'         => DS,
         // 模板引擎普通标签开始标记
-        'tpl_begin'    => '{',
+        'tpl_begin'         => '{',
         // 模板引擎普通标签结束标记
-        'tpl_end'      => '}',
+        'tpl_end'           => '}',
         // 标签库标签开始标记
-        'taglib_begin' => '{',
+        'taglib_begin'      => '{',
         // 标签库标签结束标记
-        'taglib_end'   => '}',
+        'taglib_end'        => '}',
     ],
 
     
    // 视图输出字符串内容替换
     'view_replace_str'      => [
-        '__UPLOAD__' => '/uploads',
-        '__STATIC__' => '/static',
-        '__IMAGES__' => '/static/img',
-        '__JS__'     => '/static/js',
-        '__CSS__'    => '/static/css',
-        '__LIB__'    => '/static/lib',
+        '__UPLOAD__'        => '/uploads',
+        '__STATIC__'        => '/static',
+        '__IMAGES__'        => '/static/img',
+        '__JS__'            => '/static/js',
+        '__CSS__'           => '/static/css',
+        '__LIB__'           => '/static/lib',
     ],
     // 默认跳转页面对应的模板文件
-    'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
-    'dispatch_error_tmpl'    => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
+    'dispatch_success_tmpl' => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
+    'dispatch_error_tmpl'   => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
 
     // +----------------------------------------------------------------------
     // | 异常及错误设置
     // +----------------------------------------------------------------------
 
     // 异常页面的模板文件
-    'exception_tmpl'         => THINK_PATH . 'tpl' . DS . 'think_exception.tpl',
+    'exception_tmpl'        => THINK_PATH . 'tpl' . DS . 'think_exception.tpl',
 
     // 错误显示信息,非调试模式有效
-    'error_message'          => '页面错误！请稍后再试～',
+    'error_message'         => '页面错误！请稍后再试～',
     // 显示错误信息
-    'show_error_msg'         => false,
+    'show_error_msg'        => false,
     // 异常处理handle类 留空使用 \think\exception\Handle
-    'exception_handle'       => '',
+    'exception_handle'      => '',
 
     // +----------------------------------------------------------------------
     // | 日志设置
     // +----------------------------------------------------------------------
 
-    'log'                    => [
+    'log'                   => [
         // 日志记录方式，内置 file socket 支持扩展
-        'type'  => 'File',
+        'type'              => 'File',
         // 日志保存目录
-        'path'  => LOG_PATH,
+        'path'              => LOG_PATH,
         // 日志记录级别
-        'level' => [],
+        'level'             => [],
     ],
 
     // +----------------------------------------------------------------------
     // | Trace设置 开启 app_trace 后 有效
     // +----------------------------------------------------------------------
-    'trace'                  => [
+    'trace'                 => [
         // 内置Html Console 支持扩展
-        'type' => 'Html',
+        'type'              => 'Html',
     ],
 
     // +----------------------------------------------------------------------
     // | 缓存设置
     // +----------------------------------------------------------------------
 
-    'cache'                  => [
+    'cache'                 => [
         // 驱动方式
-        'type'   => 'File',
+        'type'              => 'File',
         // 缓存保存目录
-        'path'   => CACHE_PATH,
+        'path'              => CACHE_PATH,
         // 缓存前缀
-        'prefix' => '',
+        'prefix'            => '',
         // 缓存有效期 0表示永久缓存
-        'expire' => 0,
+        'expire'            => 0,
     ],
 
     // +----------------------------------------------------------------------
     // | 会话设置
     // +----------------------------------------------------------------------
 
-    'session'                => [
-        'id'             => '',
+    'session'               => [
+        'id'                => '',
         // SESSION_ID的提交变量,解决flash上传跨域
-        'var_session_id' => '',
+        'var_session_id'    => '',
         // SESSION 前缀
-        'prefix'         => 'think',
+        'prefix'            => 'think',
         // 驱动方式 支持redis memcache memcached
-        'type'           => '',
+        'type'              => '',
         // 是否自动开启 SESSION
-        'auto_start'     => true,
+        'auto_start'        => true,
     ],
 
     // +----------------------------------------------------------------------
     // | Cookie设置
     // +----------------------------------------------------------------------
-    'cookie'                 => [
+    'cookie'                => [
         // cookie 名称前缀
-        'prefix'    => '',
+        'prefix'            => '',
         // cookie 保存时间
-        'expire'    => 0,
+        'expire'            => 0,
         // cookie 保存路径
-        'path'      => '/',
+        'path'              => '/',
         // cookie 有效域名
-        'domain'    => '',
+        'domain'            => '',
         //  cookie 启用安全传输
-        'secure'    => false,
+        'secure'            => false,
         // httponly设置
-        'httponly'  => '',
+        'httponly'          => '',
         // 是否使用 setcookie
-        'setcookie' => true,
+        'setcookie'         => true,
     ],
 
     //分页配置
-    'paginate'               => [
-        'type'      => 'bootstrap',
-        'var_page'  => 'page',
-        'list_rows' => 15,
+    'paginate'              => [
+        'type'              => 'bootstrap',
+        'var_page'          => 'page',
+        'list_rows'         => 15,
     ],
+
+    //给密码加点盐
+    'salt'                  => 'jEHLHnACVz',
 ];
