@@ -233,7 +233,8 @@
                     if (result.code == 200 && result.data !== '') {
                         $('#edit_id').attr("value", result['data']['id']);
                         $('#edit_auth_group option').each(function () {
-                            if ($(this).val() == result['data']['id']) {
+                            console.log($(this).val());
+                            if ($(this).val() == result['data']['group_id']) {
                                 $(this).prop('selected', true);
                             }
                         });

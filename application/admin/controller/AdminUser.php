@@ -14,8 +14,8 @@ class AdminUser extends AdminBase
     protected function _initialize()
     {
         parent::_initialize();
-        $this->admin_user_model        = new AdminUserModel();
-        $this->auth_group_model        = new AuthGroupModel();
+        $this->admin_user_model = new AdminUserModel();
+        $this->auth_group_model = new AuthGroupModel();
         $this->auth_group_access_model = new AuthGroupAccessModel();
         /*******************  获取分组  *******************/
         $auth_groups = $this->auth_group_model->field('id,title')->select();
@@ -56,7 +56,7 @@ class AdminUser extends AdminBase
             $res = $this->admin_user_model->allowField(true)->save($data);
             if ($res !== false) {
                 /*******************  获取新增id  *******************/
-                $auth_group_data['uid']      = $this->admin_user_model->id;
+                $auth_group_data['uid'] = $this->admin_user_model->id;
                 $auth_group_data['group_id'] = $data['group_id'];
                 /*******************  设置用户所在组  *******************/
                 $this->auth_group_access_model->save($auth_group_data);
@@ -68,10 +68,12 @@ class AdminUser extends AdminBase
     }
     public function edit($id)
     {
-       $data = $this->admin_user_model->get($id);
-       if (!empty($data)) {
-           return $this->return_msg(200,'获取成功',$data);
-       }
+        $data = $this->admin_user_model->get($id);
+        $group_data = $this->auth_group_access_model->where('uid', $id)->find();
+        $data['group_id'] = $group_data['group_id'];
+        if (!empty($data)) {
+            return $this->return_msg(200, '获取成功', $data);
+        }
     }
 
     public function update()
