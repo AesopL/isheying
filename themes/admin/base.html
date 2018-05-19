@@ -7,11 +7,10 @@
     <title>admin</title>
     <link rel="stylesheet" type="text/css" href="__CSS__/zui.css">
     <link rel="stylesheet" type="text/css" href="__CSS__/theme/zui-theme-green.css">
-    <link rel="stylesheet" type="text/css" href="__CSS__/style.css">
-
-    <script type="text/javascript" src="__LIB__/jquery/jquery.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
-    <script type="text/javascript" src="__JS__/zui.js"></script> {block name="style"}{/block}
+    <link href="__LIB__/chosen/chosen.min.css" rel="stylesheet">
+    <link href="__LIB__/chosenicons/zui.chosenicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="__CSS__/style.css"> 
+    {block name="style"}{/block}
 </head>
 
 
@@ -37,7 +36,12 @@
             </div>
         </div>
     </div>
-
+    <script type="text/javascript" src="__LIB__/jquery/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+    <script type="text/javascript" src="__JS__/zui.js"></script>
+    <script src="__JS__/layer/layer.js"></script>
+    <script src="__LIB__/chosen/chosen.min.js"></script>
+    <script src="__LIB__/chosenicons/zui.chosenicons.min.js"></script>
     <script>
         // 定义全局JS变量
         // var url = window.location.pathname + window.location.search;
@@ -46,6 +50,7 @@
             current_controller: "admin/{$controller|default=''}/",
             base_url: "__STATIC__"
         };
+        $('select.chosen-icons').chosenIcons();
         //console.log(GlobalUrl.current_controller);
     </script> {block name="scriptpre"}{/block}
     <script type="text/javascript" src="__JS__/admin.js"></script> {block name="scriptnext"}{/block}

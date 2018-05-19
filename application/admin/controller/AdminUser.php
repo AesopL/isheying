@@ -76,10 +76,68 @@ class AdminUser extends AdminBase
         }
     }
 
+    /**
+     * 更新数据
+     *
+     * @return 返回json提示信息
+     */
     public function update()
     {
+        if ($this->request->isAjax()) {
+            /*******************  接收数据  *******************/
+            $data = $this->request->param();
+            /*******************  验证数据  *******************/
+            $validate = validate('AdminUser');
+
+            $validate_res = $this->validate($data, 'AdminUser.edit');
+            if ($validate_res !== true) {
+                return $this->return_msg(400, $validate_res);
+            }
+            $user_data = ['id' => $data['id'], 'username' => $data['username'], 'status' => $data['status']];
+            /*******************  是否修改密码  *******************/
+            if (!empty($data['password'])) {
+                $data['password'] = md5($data['password'] . config('salt'));
+            }
+            /*******************  写入数据库  *******************/
+            //dump($data);
+            $res = $this->admin_user_model->allowField(true)->save($user_data, $user_data['id']);
+            if ($res !== false) {
+                /*******************  数据拼接  *******************/
+                $auth_group_access_data['uid'] = $data['id'];
+                $auth_group_access_data['group_id'] = $data['auth_group'];
+                /*******************  更新数据  *******************/
+                $this->auth_group_access_model->save($auth_group_access_data, $auth_group_access_data['uid']);
+                return $this->return_msg(200, '修改成功');
+            } else {
+                $this->return_msg(400, '修改失败');
+            }
+
+        }
+    }
+
+    /**
+     * 管理员删除/批量删除
+     *
+     * @return void
+     */
+    public function delete()
+    {
+        /*******************  接收数据  *******************/
         $data = $this->request->param();
-        dump($data);
+        /*******************  将id转为字符串  *******************/
+        $id = is_array($data['id']) ? implode(',', $data['id']) : $data['id'];
+        /*******************  是否是超级管理员  *******************/
+        if ($id == 1 || in_array(1, explode(',', $id))) {
+            return $this->return_msg(201, '超级管理员不能删除');
+        }
+        /*******************  删除数据管理员  *******************/
+        $res = $this->admin_user_model->destroy($id);
+        if ($res !== false) {
+            /*******************  删除  *******************/
+            return $this->return_msg(200, '删除成功');
+        } else {
+            return $this->return_msg(400, '删除失败');
+        }
     }
 
 }

@@ -8,7 +8,7 @@ class AdminUser extends Validate
     protected $rule = [
         'username'         => 'require|length:3,25|chsDash|unique:admin_user',
         'password'         => 'require|length:6,16',
-        'confirm_password' => 'require|confirm:password',
+        'password_confirm' => 'require|confirm:password',
         'status'           => 'number',
         'group_id'         => 'number',
     ];
@@ -20,9 +20,12 @@ class AdminUser extends Validate
         'username.unique'          => '账号已存在',
         'password.require'         => '密码不能为空',
         'password.length'          => '密码长度为6-16个字符',
-        'confirm_password.require' => '确认密码不能为空',
-        'confirm_password.confirm' => '两次密码不一致',
+        'password_confirm.require' => '确认密码不能为空',
+        'password_confirm.confirm' => '两次密码不一致',
         'status.number'            => '用户id错误',
         'group_id'                 => '用户组错误',
+    ];
+    protected $scene=[
+        'edit' => ['username','password'=>'length:6,16','password_confirm' => 'requireWith:password|confirm|length:6,16'],
     ];
 }

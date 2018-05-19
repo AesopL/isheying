@@ -48,6 +48,9 @@
                         </li>
                     </ul>
                 </div>
+                <div class="btn-group btn-dropdown">
+                    <select class="chosen-icons form-control" name="icon" id="chosenIcons" data-value="icon-star"></select>
+                </div>
                 &nbsp;
                 <button type="submit" value="查询" class="btn btn-primary-outline btn-xs">
                     <i class="icon-search"></i>&nbsp;查询</button>
@@ -87,9 +90,9 @@
                                 <i class="{$vo.icon}"></i>
                             </td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-success btn_edit" data_id="{$vo.id}" data-toggle="modal" data-target="#editMenu">
+                                <button type="button" class="btn btn-sm btn-success btn_edit" data-id="{$vo.id}" data-toggle="modal" data-target="#editMenu">
                                     <i class="icon-edit"></i> 编辑</button>
-                                <button type="button" class="btn btn-sm btn-danger btn-delete" data_id="{$vo.id}">
+                                <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{$vo.id}">
                                     <i class="icon-trash"></i> 删除</button>
                             </td>
                 </tr>
@@ -102,7 +105,7 @@
                     </th>
                     <th colspan="8">
                         <button type="button" class="btn btn-danger">
-                            <i class="icon-trash"></i> 删除</button>
+                            <i class="icon-trash"></i> 批量删除</button>
                         <div class="pull-right">
                             
                         </div>
@@ -147,7 +150,7 @@
                     </div>
                     <div class="form-group">
                         <label for="icon">图标</label>
-                        <input type="text" name="icon" class="form-control" id="icon" placeholder="">
+                        <select class="chosen-icons form-control" name="icon" id="addIcon" data-value="icon-star"></select>
                     </div>
                     <div class="form-group">
                         <label for="status">显示
@@ -206,7 +209,7 @@
                     </div>
                     <div class="form-group">
                         <label for="icon">图标</label>
-                        <input type="text" name="icon" class="form-control" id="editIcon" placeholder="">
+                        <select class="chosen-icons form-control" name="icon" id="editIcon" data-value=""></select>
                     </div>
                     <div class="form-group">
                         <label for="status">显示
@@ -237,7 +240,7 @@
         //按钮触发数据的修改
         $(".btn_edit").on('click', function () {
             // 根据id通过ajax获取点击列的数据
-            var id = $(this).attr('data_id');
+            var id = $(this).attr('data-id');
             $.ajax({
                 url: 'edit',
                 async: false,//同步，会阻塞操作
@@ -258,7 +261,9 @@
                         $("#editTitle").val(result['data']['title']);
                         $("#editName").val(result['data']['name']);
                         $("#editSort").val(result['data']['sort']);
-                        $("#editIcon").val(result['data']['icon']);
+                        // $("#editIcon").attr("data-value",result['data']['icon']);
+                        console.log(result['data']['icon']);
+                        $("#editIcon").val(result['data']['icon']).trigger("chosen:updated");
                         if (result['data']['status'] == 0) {
                             $("#StatusHide").attr("checked", true);
                         }
