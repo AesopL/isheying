@@ -11,13 +11,17 @@
 
 // 应用公共文件
 
-function genTree9($items) {
+function genTree9($items)
+{
     $tree = array(); //格式化好的树
-    foreach ($items as $item)
-        if (isset($items[$item['pid']]))
+    foreach ($items as $item) {
+        if (isset($items[$item['pid']])) {
             $items[$item['pid']]['son'][] = &$items[$item['id']];
-        else
+        } else {
             $tree[] = &$items[$item['id']];
+        }
+    }
+
     return $tree;
 }
 
@@ -34,14 +38,13 @@ function array2level($array, $pid = 0, $level = 1)
     foreach ($array as $v) {
         if ($v['pid'] == $pid) {
             $v['level'] = $level;
-            $list[]     = $v;
+            $list[] = $v;
             array2level($array, $v['id'], $level + 1);
         }
     }
 
     return $list;
 }
-
 
 /**
  * 构建层级（树状）数组
@@ -104,8 +107,10 @@ function array_child_append($parent, $pid, $child, $child_key_name)
 {
     foreach ($parent as &$item) {
         if ($item['id'] == $pid) {
-            if (!isset($item[$child_key_name]))
+            if (!isset($item[$child_key_name])) {
                 $item[$child_key_name] = [];
+            }
+
             $item[$child_key_name][] = $child;
         }
     }
@@ -113,3 +118,12 @@ function array_child_append($parent, $pid, $child, $child_key_name)
     return $parent;
 }
 
+function return_msg($code, $msg = '', $data = [])
+{
+    $result = [
+        'code' => $code,
+        'msg' => $msg,
+        'data' => $data,
+    ];
+    return $result;
+}

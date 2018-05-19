@@ -4,12 +4,17 @@ namespace app\admin;
 use think\Controller;
 use think\Db;
 use think\Loader;
+use think\Session;
 
 class AdminBase extends Controller
 {
     protected function _initialize()
     {
         parent::_initialize();
+        if (!Session::has('admin_name')) {
+            $this->redirect('admin/login/index');
+        }
+
         $this->getMenu();
         // 输出当前请求控制器（配合后台侧边菜单选中状态）
         $this->assign('controller', Loader::parseName($this->request->controller()));
