@@ -134,6 +134,7 @@ class AdminUser extends AdminBase
         $res = $this->admin_user_model->destroy($id);
         if ($res !== false) {
             /*******************  删除  *******************/
+            $this->auth_group_access_model->where('uid',$id)->delete();
             return $this->return_msg(200, '删除成功');
         } else {
             return $this->return_msg(400, '删除失败');

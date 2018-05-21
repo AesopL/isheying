@@ -107,6 +107,11 @@ class Menu extends AdminBase
         }
     }
 
+    /**
+     * 删除
+     *
+     * @return void
+     */
     public function delete()
     {
         /*******************  验证请求类型  *******************/

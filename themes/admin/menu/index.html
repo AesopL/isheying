@@ -48,9 +48,6 @@
                         </li>
                     </ul>
                 </div>
-                <div class="btn-group btn-dropdown">
-                    <select class="chosen-icons form-control" name="icon" id="chosenIcons" data-value="icon-star"></select>
-                </div>
                 &nbsp;
                 <button type="submit" value="查询" class="btn btn-primary-outline btn-xs">
                     <i class="icon-search"></i>&nbsp;查询</button>
@@ -90,7 +87,7 @@
                                 <i class="{$vo.icon}"></i>
                             </td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-sm btn-success btn_edit" data-id="{$vo.id}" data-toggle="modal" data-target="#editMenu">
+                                <button type="button" class="btn btn-sm btn-success btn_edit" data-id="{$vo.id}">
                                     <i class="icon-edit"></i> 编辑</button>
                                 <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{$vo.id}">
                                     <i class="icon-trash"></i> 删除</button>
@@ -252,6 +249,7 @@
                 success: function (result) {
                     //console.log(result['data']);
                     if (result.code == 200 && result.data !== '') {
+                         $("#editMenu").modal('show');
                         $('#editPid option').each(function () {
                             if ($(this).val() == result['data']['pid']) {
                                 $(this).prop('selected', true);
@@ -267,6 +265,9 @@
                         if (result['data']['status'] == 0) {
                             $("#StatusHide").attr("checked", true);
                         }
+                    }else{
+                         $("#editMenu").modal('hide');
+                        layer.msg(result.msg, { icon: 2 });
                     }
                 }
             });
