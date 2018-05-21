@@ -27,3 +27,19 @@ function formSend(url, data) {
         }
     })
 }
+
+function getTree(id) {
+    $.ajax({
+        url: "/admin/auth_group/getAuth",
+        async: false,//同步，会阻塞操作
+        type: 'get',//PUT DELETE POST
+        data:{id:id},
+        success: function (result) {
+            if (result.code ==200) {
+                return result.data;
+            }else{
+                layer.msg(result.msg,{icon:5});
+            }
+        }
+    });
+}

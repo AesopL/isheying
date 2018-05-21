@@ -10,7 +10,6 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
-
 function genTree9($items)
 {
     $tree = array(); //格式化好的树
@@ -21,9 +20,19 @@ function genTree9($items)
             $tree[] = &$items[$item['id']];
         }
     }
-
     return $tree;
 }
+
+
+function genTree5($items)
+{
+    foreach ($items as $item) {
+        $items[$item['pid']]['son'][$item['id']] = &$items[$item['id']];
+    }
+
+    return isset($items[0]['son']) ? $items[0]['son'] : array();
+}
+
 
 /**
  * 数组层级缩进转换
