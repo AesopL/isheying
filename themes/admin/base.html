@@ -9,8 +9,7 @@
     <link rel="stylesheet" type="text/css" href="__CSS__/theme/zui-theme-green.css">
     <link href="__LIB__/chosen/chosen.min.css" rel="stylesheet">
     <link href="__LIB__/chosenicons/zui.chosenicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="__CSS__/style.css"> 
-    {block name="style"}{/block}
+    <link rel="stylesheet" type="text/css" href="__CSS__/style.css"> {block name="style"}{/block}
 </head>
 
 
@@ -23,14 +22,16 @@
         <div class="main-content">
             <div class="wrapper">
                 <ol class="breadcrumb">
-                    <li>
+                    <!-- <li>
                         <a href="#">
-                            <i class="icon icon-home"></i> 主页</a>
-                    </li>
+                            <i class="icon icon-home"></i> 主页
+                        </a>
+                    </li> -->
+                    {foreach $breadcrumbs as $breadcrumb}
                     <li>
-                        <a href="#">栏目管理</a>
+                        <a href="#">{$breadcrumb}</a>
                     </li>
-                    <li class="active">栏目列表</li>
+                    {/foreach}
                 </ol>
                 {block name="body"} {/block}
             </div>

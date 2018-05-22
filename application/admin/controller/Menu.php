@@ -129,7 +129,7 @@ class Menu extends AdminBase
             if ($res !== false) {
                 return $this->return_msg(200, '删除成功');
             } else {
-                return $this->return_msg(400, '文章删除失败');
+                return $this->return_msg(400, '删除失败');
             }
         }
     }

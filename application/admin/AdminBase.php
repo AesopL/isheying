@@ -6,30 +6,55 @@ use think\Controller;
 use think\Loader;
 use think\Session;
 
+/**
+ * 基类控制器
+ * $mod_ctr_ac  当前模块控制器方法数组
+ * $mod_ctr_ac_id   当前当前模块控制器方法数组的id
+ */
 class AdminBase extends Controller
 {
+    protected $mod_ctr_ac; //当前模块控制器方法数组
+    protected $mod_ctr_ac_id; //当前当前模块控制器方法数组的id
+
     protected function _initialize()
     {
         parent::_initialize();
         if (!Session::has('admin_name')) {
             $this->redirect('admin/login/index');
         }
+        /*******************  当前请求的模块控制器方法  *******************/
+        $this->mod_ctr_ac = [
+            'm' => $this->request->module(),
+            'c' => $this->request->controller(),
+            'a' => $this->request->action(),
+        ];
+        /*******************  当前访问的auth_rule的id  *******************/
+        $this->mod_ctr_ac_id = db('auth_rule')
+            ->where('name', $this->mod_ctr_ac['m'] . '/' . $this->mod_ctr_ac['c'] . '/' . $this->mod_ctr_ac['a'])
+            ->field('id')
+            ->find();
+        $this->breadcrumbs = $this->getBreadcrumb($this->mod_ctr_ac_id);
+
+        /*******************  检查权限  *******************/
         $this->checkAuth();
         /*******************  获取菜单  *******************/
         $this->getMenu();
+        /*******************  返回面包屑导航数据  *******************/
+        $this->assign('breadcrumbs', $this->getBreadcrumb($this->mod_ctr_ac_id));
+
         // 输出当前请求控制器（配合后台侧边菜单选中状态）
         $this->assign('controller', Loader::parseName($this->request->controller()));
 
     }
 
+    /**
+     * 检查权限
+     *
+     * @return 提示信息
+     */
     public function checkAuth()
     {
-        /*******************  当前请求的模块控制器方法  *******************/
-        $mod_ctr_ac = [
-            'module' => $this->request->module(),
-            'controller' => $this->request->controller(),
-            'action' => $this->request->action(),
-        ];
+
         /*******************  实例化Auth类  *******************/
         $auth = new Auth();
         /*******************  当前管理员ID  *******************/
@@ -37,10 +62,10 @@ class AdminBase extends Controller
         /*******************  排除模块  *******************/
         $not_check = ['admin/Index/index'];
         /*******************  检查权限  *******************/
-        if (!in_array($mod_ctr_ac['module'] . '/' . $mod_ctr_ac['controller'] . '/' . $mod_ctr_ac['action'], $not_check)) {
-            $auth_res = $auth->check($mod_ctr_ac['module'] . '/' . $mod_ctr_ac['controller'] . '/' . $mod_ctr_ac['action'], $id);
+        if (!in_array($this->mod_ctr_ac['m'] . '/' . $this->mod_ctr_ac['c'] . '/' . $this->mod_ctr_ac['a'], $not_check)) {
+            $auth_res = $auth->check($this->mod_ctr_ac['m'] . '/' . $this->mod_ctr_ac['c'] . '/' . $this->mod_ctr_ac['a'], $id);
             if ($auth_res !== true) {
-              $this->error('没有权限');
+                $this->error('没有权限');
             }
         }
 
@@ -53,7 +78,7 @@ class AdminBase extends Controller
     {
         $menu = [];
         $admin_id = session('uid');
-        $auth     = new Auth();
+        $auth = new Auth();
         /*******************  获取菜单  *******************/
         $auth_rule_list = db('auth_rule')->order(['sort' => 'DESC', 'id' => 'ASC'])->where('status', 1)->select();
         /*******************  根据权限筛选列表  *******************/
@@ -82,4 +107,40 @@ class AdminBase extends Controller
         return $return_data;
 
     }
+
+    /**
+     * 面包屑导航数据
+     *
+     * @param [type] $id
+     * @return 数组信息
+     */
+    public function getBreadcrumb($id)
+    {
+        $breadcrumb_data = [];
+        /*******************  根据id获得pid  *******************/
+        $info = db('auth_rule')->field('id,title,pid')->find($id);
+        //dump($info);
+        $breadcrumb_data[] = $info['title'];
+        /*******************  如果存在上级分类，则逐步向上获取上级分类的信息  *******************/
+        while ($info['pid'] != 0 && $info['pid'] != "") {
+            /*******************  上级分类信息  *******************/
+            $info = $this->getAuthRuleById($info['pid']);
+            $breadcrumb_data[] = $info['title']; //上级分类名称
+        }
+        //dump($breadcrumb_data);
+        return array_reverse($breadcrumb_data);
+
+    }
+
+    /**
+     * id查询auth_rule的数据
+     *
+     * @param [int] $id
+     * @return 单个数组
+     */
+    public function getAuthRuleById($id)
+    {
+        return db('auth_rule')->field('id,title,pid')->find($id);
+    }
+
 }
