@@ -101,8 +101,8 @@ var Script = function () {
     });
 
     //模态框内容重置    
-    // $('.modal').on('hide.zui.modal', function () {
-    //     $(this).find('form')[0].reset();
-    // });
+    $('.form-modal').on('hide.zui.modal', function () {
+        $(this).find('form')[0].reset();
+    });
 
 }();

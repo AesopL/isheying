@@ -117,41 +117,50 @@ class AuthGroup extends AdminBase
         }
     }
 
+    /**
+     * 获取已授权的权限
+     *
+     * @param [string] $id
+     * @return void
+     */
     public function getAuth($id)
     {
         /*******************  管理员的权限  *******************/
-        $auth_group_list = $this->auth_group_model->find($id);
+        $auth_group_list = $this->auth_group_model->find($id)->toArray();
         /*******************  转为数组  *******************/
-        $auths = explode(',', $auth_group_list);
+        $auths = explode(',', $auth_group_list['rules']);
         $auth_rule_list = $this->auth_rule_model->field('id,title,pid')->select();
         /*******************  设置选中  *******************/
         foreach ($auth_rule_list as $key => $value) {
             in_array($value['id'], $auths) && $auth_rule_list[$key]['checked'] = true;
         }
-        $items = array(
-            1 => array('id' => 1, 'pid' => 0, 'name' => '江西省'),
-            2 => array('id' => 2, 'pid' => 0, 'name' => '黑龙江省'),
-            3 => array('id' => 3, 'pid' => 1, 'name' => '南昌市'),
-            4 => array('id' => 4, 'pid' => 2, 'name' => '哈尔滨市'),
-            5 => array('id' => 5, 'pid' => 2, 'name' => '鸡西市'),
-            6 => array('id' => 6, 'pid' => 4, 'name' => '香坊区'),
-            7 => array('id' => 7, 'pid' => 4, 'name' => '南岗区'),
-            8 => array('id' => 8, 'pid' => 6, 'name' => '和兴路'),
-            9 => array('id' => 9, 'pid' => 7, 'name' => '西大直街'),
-            10 => array('id' => 10, 'pid' => 8, 'name' => '东北林业大学'),
-            11 => array('id' => 11, 'pid' => 9, 'name' => '哈尔滨工业大学'),
-            12 => array('id' => 12, 'pid' => 8, 'name' => '哈尔滨师范大学'),
-            13 => array('id' => 13, 'pid' => 1, 'name' => '赣州市'),
-            14 => array('id' => 14, 'pid' => 13, 'name' => '赣县'),
-            15 => array('id' => 15, 'pid' => 13, 'name' => '于都县'),
-            16 => array('id' => 16, 'pid' => 14, 'name' => '茅店镇'),
-            17 => array('id' => 17, 'pid' => 14, 'name' => '大田乡'),
-            18 => array('id' => 18, 'pid' => 16, 'name' => '义源村'),
-            19 => array('id' => 19, 'pid' => 16, 'name' => '上坝村'),
-        );
+        return return_msg(200, '成功', $auth_rule_list);
 
-        $auth_rule_list = genTree9($items);
-        return return_msg(200,'成功',$auth_rule_list);
+    }
 
+    /**
+     * 更新权限
+     *
+     * @return void
+     */
+    public function updateAuth()
+    {
+        /*******************  判断请求  *******************/
+        if (!$this->request->isAjax()) {
+            return return_msg(400, '请求错误');
+        }
+        /*******************  接收数据  *******************/
+        $data = $this->request->param();
+        /*******************  验证数据  *******************/
+        if ($data['id']) {
+            $data['rules'] = is_array($data['auth_rule_ids']) ? implode(',', $data['auth_rule_ids']) : '';
+        }
+        /*******************  写入数据库  *******************/
+        $res = $this->auth_group_model->allowField(true)->save($data,$data['id']);
+        if ($res !== false) {
+            return return_msg(200, '授权成功');
+        } else {
+            return return_msg(400, '授权失败');
+        }
     }
 }

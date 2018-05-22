@@ -20,6 +20,7 @@ function genTree9($items)
             $tree[] = &$items[$item['id']];
         }
     }
+
     return $tree;
 }
 

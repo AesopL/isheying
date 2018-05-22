@@ -1,4 +1,5 @@
-{extend name="base"} {block name="body"}
+{extend name="base"} {block name="style"}
+<link href="__LIB__/ztree/css/metro.css" rel="stylesheet"> {/block} {block name="body"}
 <div class="panel">
     <div class="panel-heading">
         <h5>栏目管理</h5>
@@ -76,7 +77,7 @@
                     <td class="text-center">{$vo.title}</td>
                     <td class="text-center">{if condition="$vo.status==1"}启用{else}禁用{/if}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-sm color-blue btn_auth" data-id="{$vo.id}" data-toggle="modal" data-target="#auth">
+                        <button type="button" class="btn btn-sm color-blue btn_auth" data-id="{$vo.id}">
                             <i class="icon icon-chevron-sign-down"></i> 授权</button>
                         <button type="button" class="btn btn-sm btn-success btn_edit" data-id="{$vo.id}" data-toggle="modal" data-target="#editMenu">
                             <i class="icon-edit"></i> 编辑</button>
@@ -180,15 +181,34 @@
     </div>
 </div>
 <!-- 权限modal层 -->
-<div class="modal fade" id="auth" autoComplete="off">
+<div class="modal fade" id="authModal">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div id="authTree"><div>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">标题</h4>
+            </div>
+            <div class="modal-body">
+                <div class="content_wrap">
+                    <div class="zTreeDemoBackground left">
+                        <ul id="authTree" class="ztree"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="text" hidden name="id" id="auth-id">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="auth-group">授权</button>
+            </div>
         </div>
     </div>
 </div>
 
 {/block} {block name="scriptnext"}
+<script src="https://cdn.bootcss.com/zTree.v3/3.5.33/js/jquery.ztree.all.min.js"></script>
 <script type='text/javascript'>
     $(function () {
         //按钮触发数据的修改
@@ -204,9 +224,9 @@
                     //console.log('完成了');
                 },
                 success: function (result) {
-                    //console.log(result.code);
                     if (result.code == 200 && result.data !== '') {
-                        $('#edit_id').attr('value',result.data['id']);
+
+                        $('#edit_id').attr('value', result.data['id']);
                         $("#edit_title").val(result['data']['title']);
                         if (result['data']['status'] == 0) {
                             $("#edit_hidestatus").attr("checked", true);
@@ -216,9 +236,81 @@
             });
         });
 
-        $(".btn_auth").click(function(){
-            var id=$(this).attr('data-id');
-            $('#tree').treeview({ data: getTree(id) });
+        var tree = $("#authTree");
+        var zTree;
+        // zTree 配置项
+        var setting = {
+            check: {
+                enable: true
+            },
+            view: {
+                dblClickExpand: false,
+                showLine: true,
+                showIcon: false,
+                selectedMulti: false
+            },
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "pid",
+                    rootpid: ""
+                },
+                key: {
+                    name: "title"
+                }
+            }
+        };
+
+        $(".btn_auth").click(function () {
+            var _id = $(this).attr('data-id');
+            $.ajax({
+                url: "/admin/auth_group/getAuth",
+                async: false,//同步，会阻塞操作
+                type: 'get',//PUT DELETE POST
+                data: { id: _id },
+                success: function (result) {
+                    if (result.code == 200) {
+                        //modal层显示
+                        $("#authModal").modal('show');
+                        $("#auth-id").attr("value",_id);
+                        //zTree初始化
+                        zTree = $.fn.zTree.init(tree, setting, result.data);
+                    } else {
+                        layer.msg(result.msg, { icon: 5 });
+                    }
+                }
+            });
+
+        });
+
+        $("#auth-group").click(function () {
+            var checked_ids, auth_rule_ids = [];
+            var _id = $("#auth-id").val();
+            checked_ids = zTree.getCheckedNodes(); // 获取当前选中的checkbox
+            $.each(checked_ids, function (index, item) {
+                auth_rule_ids.push(item.id);
+            });
+            $.ajax({
+                url: 'updateAuth',
+                type: 'POST',
+                data: {
+                    id: _id,
+                    auth_rule_ids: auth_rule_ids
+                },
+                success: function (result) {
+                    if (result.code == 200) {
+                        layer.msg('授权成功', { icon: 1 });
+                        setTimeout(() => {
+                        location.reload();
+                        }, 2000);
+                    } else {
+                        layer.msg('授权失败', { icon: 5 });
+                    }
+                }
+
+            });
+
         });
 
     });
