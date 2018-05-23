@@ -153,10 +153,11 @@ class AuthGroup extends AdminBase
         $data = $this->request->param();
         /*******************  验证数据  *******************/
         if ($data['id']) {
-            $data['rules'] = is_array($data['auth_rule_ids']) ? implode(',', $data['auth_rule_ids']) : '';
+            $data['rules'] = isset($data['auth_rule_ids']) && is_array($data['auth_rule_ids']) ? implode(',', $data['auth_rule_ids']) : '';
         }
+        //dump($data);die;
         /*******************  写入数据库  *******************/
-        $res = $this->auth_group_model->allowField(true)->save($data,$data['id']);
+        $res = $this->auth_group_model->allowField(true)->save($data, $data['id']);
         if ($res !== false) {
             return return_msg(200, '授权成功');
         } else {

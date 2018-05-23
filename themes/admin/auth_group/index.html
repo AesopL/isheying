@@ -300,6 +300,7 @@
                 },
                 success: function (result) {
                     if (result.code == 200) {
+                        $("#authModal").modal('hide');
                         layer.msg('授权成功', { icon: 1 });
                         setTimeout(() => {
                         location.reload();

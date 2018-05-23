@@ -54,7 +54,10 @@ class Login extends \think\Controller
         /*******************  写入session  *******************/
         session('uid', $user['id']);
         session('admin_name', $user['username']);
+        /*******************  登陆ip写入数据库  *******************/
+        db('admin_user')->where('id', session('uid'))->setField('login_ip',$this->request->ip());
         return return_msg(200, '登陆成功', ['url' => 'admin/index/index']);
+
     }
 
     /**
