@@ -1,0 +1,25 @@
+{extend name="base" /} {block name="body"}
+<div class="row">
+    {foreach name="site_configs" item="config"}
+    <div class="col-md-4">
+        <div {if condition="$config['checked'] eq 1" } class="panel panel-info" {else/}class="panel" {/if}>
+            <div class="panel-heading">
+                {$config.checked} {$config.name}
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    {foreach name="config['value']" item="vo"}
+                    <li>{$vo}</li>
+                    {/foreach}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    {/foreach}
+</div>
+
+{/block}
+{block name="scriptnext"}
+
+{/block}

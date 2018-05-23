@@ -1,0 +1,55 @@
+{extend name="base" /} {block name="body"}
+<div class="row">
+    <div class="col-md-6">
+        <form action="" method="post">
+            <div class="form-group has-icon-left">
+                <label for="inputAccountExample1" class="input-control-icon-left">
+                    网站标题
+                </label>
+                <input id="inputAccountExample1" name="site_config[site_title]" type="text" class="form-control" placeholder="网站标题" value="{$site_config.site_title|default=''}">
+            </div>
+            <div class="form-group has-icon-right">
+                <label for="inputPasswordExample1" class="input-control-icon-right">
+                    SEO标题
+                </label>
+                <input id="inputPasswordExample1" name="site_config[seo_title]" type="text" class="form-control" placeholder="SEO标题" value="{$site_config.seo_title|default=''}">
+            </div>
+            <div class="form-group has-icon-left has-icon-right">
+                <label for="inputEmailExample1" class="input-control-icon-left">
+                    SEO关键字
+                </label>
+                <input id="inputEmailExample1" name="site_config[seo_keyword]" type="text" class="form-control" placeholder="SEO关键字" value="{$site_config.seo_keyword|default=''}">
+            </div>
+            <div class="form-group has-icon-left has-icon-right">
+                <label for="inputEmailExample1" class="input-control-icon-left">
+                    SEO说明
+                </label>
+                <textarea id="inputEmailExample1" name="site_config[seo_description]" class="form-control" placeholder="SEO说明" value="{$site_config.seo_description|default=''}"></textarea>
+            </div>
+            <div class="form-group has-icon-left has-icon-right">
+                <label for="inputEmailExample1" class="input-control-icon-left">
+                    版权信息
+                </label>
+                <input id="inputEmailExample1" name="site_config[site_copyright]" type="text" class="form-control" placeholder="版权信息" value="{$site_config.site_copyright|default=''}">
+            </div>
+            <div class="form-group has-icon-left has-icon-right">
+                <label for="inputEmailExample1" class="input-control-icon-left">
+                    ICP备案号
+                </label>
+                <input id="inputEmailExample1" name="site_config[site_icp]" type="text" class="form-control" placeholder="ICP备案号" value="{$site_config.site_icp|default=''}">
+            </div>
+            <div class="form-group has-icon-left has-icon-right">
+                <label for="inputEmailExample1" class="input-control-icon-left">
+                    统计代码
+                </label>
+                <textarea id="inputEmailExample1" name="site_config[site_tongji]" class="form-control" placeholder="统计代码" value="{$site_config.site_tongji|default=''}"></textarea>
+            </div>
+            <div class="form-group pull-right">
+                <button class="btn">提交</button>
+                <button type="reset" class="btn btn-primary">重置</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{/block}

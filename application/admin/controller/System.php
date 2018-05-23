@@ -3,20 +3,11 @@ namespace app\admin\controller;
 
 use app\admin\AdminBase;
 
-class Index extends AdminBase
+class System extends AdminBase
 {
-
-    public function _initialize()
-    {
-        parent::_initialize();
-    }
-    /**
-     * 获取服务器信息
-     *
-     * @return array
-     */
     public function index()
     {
+
         $info = [
             ['title' => '系统', 'name' => PHP_OS],
             ['title' => '运行环境', 'name' => $_SERVER["SERVER_SOFTWARE"]],
@@ -32,9 +23,42 @@ class Index extends AdminBase
             // ['title' => '', 'name' => (1 === get_magic_quotes_gpc()) ? 'YES' : 'NO'],
             // ['title' => '', 'name' => (1 === get_magic_quotes_runtime()) ? 'YES' : 'NO'],
         ];
-        //dump($info);
-        $this->assign('info', $info);
-        return $this->fetch();
 
+        $site_config = db('system')->field('value')->where('name', 'site_config')->find();
+        $site_config = unserialize($site_config['value']);
+        $this->assign('site_config', $site_config);
+        $this->assign('info', $info);
+
+        return $this->fetch();
+    }
+
+    public function editSiteConfig($id = 1)
+    {
+        $site_config = db('system')->field('value')->where('id', $id)->find();
+        $site_config = unserialize($site_config['value']);
+        //dump($site_config);die;
+        return $this->fetch('edit_site_config', ['site_config' => $site_config]);
+    }
+
+    public function siteConfig($id = 1)
+    {
+        $data = [
+            "site_title" => "后台管理系统",
+            "seo_title" => "",
+            "seo_keyword" => "",
+            "seo_description" => "",
+            "site_copyright" => "",
+            "site_icp" => "",
+            "site_tongji" => "",
+        ];
+        //dump(serialize($data));
+        $site_configs = db('system')->select();
+        //$site_configs = unserialize($site_config['value']);
+        foreach ($site_configs as $key => $value) {
+            $site_configs[$key]['value'] = unserialize($value['value']);
+        }
+        dump($site_configs);die;
+        //dump($site_config);die;
+        return $this->fetch('site_config', ['site_configs' => $site_configs]);
     }
 }
