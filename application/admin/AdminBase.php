@@ -60,11 +60,11 @@ class AdminBase extends Controller
         /*******************  实例化Auth类  *******************/
         $auth = new Auth();
         /*******************  当前管理员ID  *******************/
-        $id = session('uid');
+        $admin_id = session('uid');
         /*******************  排除模块  *******************/
         $not_check = ['admin/Index/index'];
-        /*******************  检查权限  *******************/
-        if (!in_array($this->mod_ctr_ac['m'] . '/' . $this->mod_ctr_ac['c'] . '/' . $this->mod_ctr_ac['a'], $not_check)) {
+        /*******************  检查权限(不检查超级管理员)  *******************/
+        if (!in_array($this->mod_ctr_ac['m'] . '/' . $this->mod_ctr_ac['c'] . '/' . $this->mod_ctr_ac['a'], $not_check) && $admin_id != 1) {
             $auth_res = $auth->check($this->mod_ctr_ac['m'] . '/' . $this->mod_ctr_ac['c'] . '/' . $this->mod_ctr_ac['a'], $id);
             if ($auth_res !== true) {
                 $this->error('没有权限');
