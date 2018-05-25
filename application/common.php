@@ -24,7 +24,6 @@ function genTree9($items)
     return $tree;
 }
 
-
 function genTree5($items)
 {
     foreach ($items as $item) {
@@ -33,7 +32,6 @@ function genTree5($items)
 
     return isset($items[0]['son']) ? $items[0]['son'] : array();
 }
-
 
 /**
  * 数组层级缩进转换
@@ -127,7 +125,14 @@ function array_child_append($parent, $pid, $child, $child_key_name)
 
     return $parent;
 }
-
+/**
+ * 返回json提示新 function
+ *
+ * @param [type] $code
+ * @param string $msg
+ * @param array $data
+ * @return json信息
+ */
 function return_msg($code, $msg = '', $data = [])
 {
     $result = [
@@ -136,4 +141,42 @@ function return_msg($code, $msg = '', $data = [])
         'data' => $data,
     ];
     return $result;
+}
+
+/**
+ * 上传图片
+ *
+ * @param [type] $file
+ * @param string $type
+ * @return void
+ */
+function upload_file($file, $type = '')
+{
+    $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+    if ($info) {
+        $path = '/uploads/' . $info->getSaveName();
+        if (!empty($type)) {
+            $this->image_edit($path, $type);
+        }
+        return str_replace('\\', '/', $path);
+    } else {
+       return false;
+    }
+}
+/**
+ * 生成缩略图
+ *
+ * @param [string] $path 图片路径
+ * @param [string] $type 图片场景
+ * @return void
+ */
+function image_edit($path, $type)
+{
+    //dump(ROOT_PATH . 'public' . $path);die;
+    $image = Image::open(ROOT_PATH . 'public' . $path);
+    switch ($type) {
+        case 'head_img':
+            $image->thumb(200, 200, Image::THUMB_CENTER)->save(ROOT_PATH . 'public' . $path);
+            break;
+    }
 }

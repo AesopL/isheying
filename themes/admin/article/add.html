@@ -1,0 +1,128 @@
+{extend name="base"} {block name="style"}
+<link rel="stylesheet" href="__LIB__/kindeditor/kindeditor.min.css">
+<link rel="stylesheet" href="__LIB__/uploader/zui.uploader.min.css">
+<link rel="stylesheet" href="__LIB__/datetimepicker/datetimepicker.min.css">
+{/block} {block name="body"}
+<div class="panel">
+    <div class="panel-heading">
+        <h5>编写文章</h5>
+    </div>
+    <div class="panel-body">
+        <form action="save" method="post">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="title">分类</label>
+                    <select class="form-control" name="category" id="category">
+                        {foreach name="categories" item="category"}
+                        <option>{$category.name}</option>
+                        {/foreach}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="title" class="required">标题</label>
+                    <input id="title" name="title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="title">作者</label>
+                    <input id="title" name="title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="title">简介</label>
+                    <input id="title" name="title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="title">缩略图</label>
+                    <div id="uploaderThumb" class="uploader">
+                        <input type="text" hidden name="thumb" id="thumb">
+                        <div class="file-list" data-drag-placeholder="请拖拽文件到此处"></div>
+                        <button type="button" class="btn btn-primary uploader-btn-browse">
+                            <i class="icon icon-cloud-upload"></i> 选择文件
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="is_top">置顶:</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="is_top"> 是
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="is_top" checked> 否
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="is_recommend">推荐:</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="is_recommend"> 是
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="is_recommend" checked> 否
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="">状态:</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="status" checked> 审核
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="status"> 未审核
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="publish_time" class="required">发布时间:</label>
+                    <input type="text" name="publish_time" class="form-control form-datetime" placeholder="选择或者输入一个日期：yyyy-MM-dd">
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label for="content">文章内容</label>
+                    <textarea id="content" name="content" class="form-control kindeditor" style="height:580px;">Hello, world!</textarea>
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">提交</button>
+                <button type="button" class="btn">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+{/block} {block name="scriptnext"}
+<script src="__LIB__/kindeditor/kindeditor.min.js"></script>
+<script src="__LIB__/uploader/zui.uploader.min.js"></script>
+<script src="__LIB__/datetimepicker/datetimepicker.min.js"></script>
+<script type="text/javascript">
+    //编辑器初始化
+    KindEditor.create('textarea.kindeditor', {
+        basePath: '__LIB__/kindeditor',
+        allowFileManager: true,
+        bodyClass: 'article-content'
+    });
+
+    //文件上传
+    $('#uploaderThumb').uploader({
+        autoUpload: true,            // 当选择文件后立即自动进行上传操作
+        url: '/admin/article/uploaderThumb', // 文件上传提交地址
+        responseHandler: function (responseObject, file) {
+            var res = $.parseJSON(responseObject.response);
+            console.log(res.url);
+            $("#thumb").attr('value',res.url);
+            
+            // 当服务器返回的文本内容包含 `'error'` 文本时视为上传失败
+            // if (responseObject.response.indexOf('error')) {
+            //     return '上传失败。服务器返回了一个错误：' + responseObject.response;
+            // }
+        }
+    });
+
+    // 选择时间和日期
+        $(".form-datetime").datetimepicker(
+            {
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1,
+                format: "yyyy-mm-dd hh:ii"
+            });
+</script> {/block}

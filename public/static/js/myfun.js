@@ -1,3 +1,9 @@
+/** 
+ * javascript comment 
+ * @Author: flydreame 
+ * @Date: 2018-05-25 16:44:06 
+ * @Desc:  
+ */
 function formSend(url, data) {
     //发送ajax请求
     $.ajax({
