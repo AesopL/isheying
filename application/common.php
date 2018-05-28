@@ -156,7 +156,7 @@ function upload_file($file, $type = '')
     if ($info) {
         $path = '/uploads/' . $info->getSaveName();
         if (!empty($type)) {
-            $this->image_edit($path, $type);
+            image_edit($path, $type);
         }
         return str_replace('\\', '/', $path);
     } else {
@@ -173,7 +173,7 @@ function upload_file($file, $type = '')
 function image_edit($path, $type)
 {
     //dump(ROOT_PATH . 'public' . $path);die;
-    $image = Image::open(ROOT_PATH . 'public' . $path);
+    $image = \think\Image::open(ROOT_PATH . 'public' . $path);
     switch ($type) {
         case 'head_img':
             $image->thumb(200, 200, Image::THUMB_CENTER)->save(ROOT_PATH . 'public' . $path);

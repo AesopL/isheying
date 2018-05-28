@@ -52,7 +52,25 @@ class Article extends \app\admin\AdminBase
 
     public function save()
     {
-        $data = $this->request->param();
+        /*******************  判断请求  *******************/
+        if (!$this->request->isAjax()) {
+            return \return_msg(400, '请求错误');
+        }
+        /*******************  接收参数  *******************/
+        $data = $this->request->post();
+        /*******************  验证数据  *******************/
+        $validate_res = $this->validate($data, 'Article');
+        if ($validate_res !== true) {
+            return return_msg('400', $validate_res);
+        }
+        /*******************  写入数据库  *******************/
+        $res = $this->article_model->allowField(true)->save($data);
+        /*******************  返回信息  *******************/
+        if ($res !== false) {
+            return return_msg(200, '添加成功');
+        } else {
+            return return_msg(400, '添加失败');
+        }
     }
     /**
      * 上传文件
@@ -61,16 +79,16 @@ class Article extends \app\admin\AdminBase
      */
     public function uploaderThumb()
     {
-        $data = $this->request->param();
-        // dump($data);die;
-        // $thumb_path = upload_file($data['name'], 'article_thumb');
-        // if ($thumb_path !==false) {
+        $data = $this->request->file('file');
+
+        //dump($data);die;
+        $thumb_path = upload_file($data, 'article_thumb');
+        if ($thumb_path !== false) {
             $data = [
                 'result' => 'ok',
-                'id' => 10001,
-                'url' => 'http://example.com/file-10001.jpg',
+                'url' => $thumb_path,
             ];
-        // }
+        }
         return json($data);
 
     }

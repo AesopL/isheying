@@ -1,37 +1,37 @@
 {extend name="base"} {block name="style"}
 <link rel="stylesheet" href="__LIB__/kindeditor/kindeditor.min.css">
 <link rel="stylesheet" href="__LIB__/uploader/zui.uploader.min.css">
-<link rel="stylesheet" href="__LIB__/datetimepicker/datetimepicker.min.css">
-{/block} {block name="body"}
+<link rel="stylesheet" href="__LIB__/datetimepicker/datetimepicker.min.css"> {/block} {block name="body"}
 <div class="panel">
     <div class="panel-heading">
         <h5>编写文章</h5>
     </div>
     <div class="panel-body">
-        <form action="save" method="post">
+        <form action="save" id="addForm" method="post" onsubmit="return false">
+            <input type="hidden" name="__token__" value="{$Request.token}" />
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="title">分类</label>
                     <select class="form-control" name="category" id="category">
                         {foreach name="categories" item="category"}
-                        <option>{$category.name}</option>
+                        <option value="{$category.id}">{$category.name}</option>
                         {/foreach}
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="title" class="required">标题</label>
-                    <input id="title" name="title" class="form-control">
+                    <input id="title" type="text" name="title" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="title">作者</label>
-                    <input id="title" name="title" class="form-control">
+                    <label for="author" class="required">作者</label>
+                    <input id="author" type="text" name="author" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="title">简介</label>
-                    <input id="title" name="title" class="form-control">
+                    <label for="introducton">简介</label>
+                    <input id="introducton" type="text" name="introducton" class="form-control">
                 </div>
                 <div class="form-group">
-                    <label for="title">缩略图</label>
+                    <label for="thumb">缩略图</label>
                     <div id="uploaderThumb" class="uploader">
                         <input type="text" hidden name="thumb" id="thumb">
                         <div class="file-list" data-drag-placeholder="请拖拽文件到此处"></div>
@@ -75,54 +75,15 @@
             <div class="col-md-10">
                 <div class="form-group">
                     <label for="content">文章内容</label>
-                    <textarea id="content" name="content" class="form-control kindeditor" style="height:580px;">Hello, world!</textarea>
+                    <textarea id="content" name="content" class="form-control kindeditor" style="height:580px;"></textarea>
                 </div>
             </div>
             <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary">提交</button>
+                <button type="button" class="btn btn-primary" id="addSubmit">提交</button>
                 <button type="button" class="btn">取消</button>
             </div>
         </form>
     </div>
 </div>
-{/block} {block name="scriptnext"}
-<script src="__LIB__/kindeditor/kindeditor.min.js"></script>
-<script src="__LIB__/uploader/zui.uploader.min.js"></script>
-<script src="__LIB__/datetimepicker/datetimepicker.min.js"></script>
-<script type="text/javascript">
-    //编辑器初始化
-    KindEditor.create('textarea.kindeditor', {
-        basePath: '__LIB__/kindeditor',
-        allowFileManager: true,
-        bodyClass: 'article-content'
-    });
-
-    //文件上传
-    $('#uploaderThumb').uploader({
-        autoUpload: true,            // 当选择文件后立即自动进行上传操作
-        url: '/admin/article/uploaderThumb', // 文件上传提交地址
-        responseHandler: function (responseObject, file) {
-            var res = $.parseJSON(responseObject.response);
-            console.log(res.url);
-            $("#thumb").attr('value',res.url);
-            
-            // 当服务器返回的文本内容包含 `'error'` 文本时视为上传失败
-            // if (responseObject.response.indexOf('error')) {
-            //     return '上传失败。服务器返回了一个错误：' + responseObject.response;
-            // }
-        }
-    });
-
-    // 选择时间和日期
-        $(".form-datetime").datetimepicker(
-            {
-                weekStart: 1,
-                todayBtn: 1,
-                autoclose: 1,
-                todayHighlight: 1,
-                startView: 2,
-                forceParse: 0,
-                showMeridian: 1,
-                format: "yyyy-mm-dd hh:ii"
-            });
-</script> {/block}
+{/block} {block name="scriptpre"}
+{/block}

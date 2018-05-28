@@ -105,4 +105,40 @@ var Script = function () {
         $(this).find('form')[0].reset();
     });
 
+    //编辑器初始化
+    var _editer = KindEditor.create('textarea.kindeditor', {
+        basePath: GlobalUrl.base_url+'/lib/kindeditor',
+        allowFileManager: true,
+        bodyClass: 'article-content',
+        afterBlur: function () {  //利用该方法处理当富文本编辑框失焦之后，立即同步数据
+            KindEditor.sync(".kindeditor");
+        }
+    });
+    //文件上传
+    $('#uploaderThumb').uploader({
+        autoUpload: true,            // 当选择文件后立即自动进行上传操作
+        url: '/admin/article/uploaderThumb', // 文件上传提交地址
+        responseHandler: function (responseObject, file) {
+            var res = $.parseJSON(responseObject.response);
+            $("#thumb").attr('value', res.url);
+
+            // 当服务器返回的文本内容包含 `'error'` 文本时视为上传失败
+            // if (responseObject.response.indexOf('error')) {
+            //     return '上传失败。服务器返回了一个错误：' + responseObject.response;
+            // }
+        }
+    });
+
+    // 选择时间和日期
+    $(".form-datetime").datetimepicker(
+        {
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1,
+            format: "yyyy-mm-dd hh:ii"
+        });
 }();
