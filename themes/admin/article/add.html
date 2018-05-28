@@ -43,28 +43,28 @@
                 <div class="form-group">
                     <label for="is_top">置顶:</label>
                     <label class="radio-inline">
-                        <input type="radio" name="is_top"> 是
+                        <input type="radio" value="1" name="is_top"> 是
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="is_top" checked> 否
+                        <input type="radio" value="0" name="is_top" checked> 否
                     </label>
                 </div>
                 <div class="form-group">
                     <label for="is_recommend">推荐:</label>
                     <label class="radio-inline">
-                        <input type="radio" name="is_recommend"> 是
+                        <input type="radio" value="1" name="is_recommend"> 是
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="is_recommend" checked> 否
+                        <input type="radio" value="0" name="is_recommend" checked> 否
                     </label>
                 </div>
                 <div class="form-group">
                     <label for="">状态:</label>
                     <label class="radio-inline">
-                        <input type="radio" name="status" checked> 审核
+                        <input type="radio" value="1" name="status" checked> 审核
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="status"> 未审核
+                        <input type="radio" value="0" name="status"> 未审核
                     </label>
                 </div>
                 <div class="form-group">
@@ -86,4 +86,16 @@
     </div>
 </div>
 {/block} {block name="scriptpre"}
+<script src="__LIB__/kindeditor/kindeditor.min.js"></script>
+<script>
+      //编辑器初始化
+        var _editer = KindEditor.create('textarea.kindeditor', {
+            basePath: GlobalUrl.base_url + '/lib/kindeditor',
+            allowFileManager: true,
+            bodyClass: 'article-content',
+            afterBlur: function () {  //利用该方法处理当富文本编辑框失焦之后，立即同步数据
+                KindEditor.sync(".kindeditor");
+            }
+        });
+</script>
 {/block}

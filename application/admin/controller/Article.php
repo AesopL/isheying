@@ -50,6 +50,11 @@ class Article extends \app\admin\AdminBase
         return $this->fetch();
     }
 
+    /**
+     * 文章保存
+     *
+     * @return json信息
+     */
     public function save()
     {
         /*******************  判断请求  *******************/
@@ -71,6 +76,58 @@ class Article extends \app\admin\AdminBase
         } else {
             return return_msg(400, '添加失败');
         }
+    }
+
+    /**
+     * 编辑文章
+     *
+     * @param [string|int] $id
+     * @return void
+     */
+    public function edit($id)
+    {
+        $article = $this->article_model->get($id);
+        //dump($article);die;
+        return $this->fetch('edit', ['article' => $article]);
+    }
+
+    public function update()
+    {
+        /*******************  判断请求  *******************/
+        if (!$this->request->isAjax()) {
+            return return_msg(400, '请求错误');
+        }
+        /*******************  接收数据  *******************/
+        $data = $this->request->param();
+        /*******************  验证数据  *******************/
+        $validate_res = $this->validate($data, 'Article');
+        if ($validate_res !== true) {
+            return return_msg(400, $validate_res);
+        }
+        /*******************  写入数据库  *******************/
+        $res = $this->article_model->allowField(true)->save($data, $data['id']);
+        if ($res !== false) {
+            return return_msg(200, '修改成功');
+        } else {
+            return return_msg(400, '修改失败');
+        }
+    }
+
+    public function delete()
+    {
+        /*******************  接收数据  *******************/
+        $data = $this->request->param();
+        /*******************  将id转为字符串  *******************/
+        $id = is_array($data['id']) ? implode(',', $data['id']) : $data['id'];
+
+        /*******************  删除数据  *******************/
+        $res = $this->article_model->destroy($id);
+        if ($res !== false) {
+            return $this->return_msg(200, '删除成功');
+        } else {
+            return $this->return_msg(400, '删除失败');
+        }
+
     }
     /**
      * 上传文件

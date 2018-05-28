@@ -63,9 +63,11 @@ var Script = function () {
         formSend('save', $('#addForm').serialize());
     });
 
+    //$("#btnEdit").click()
+
     //统一修改数据
     $("#editSubmit").click(function () {
-        formSend('update', $('#editForm').serialize());
+        formSend('/' + GlobalUrl.current_controller + 'update', $('#editForm').serialize());
     });
 
     //统一删除
@@ -105,15 +107,7 @@ var Script = function () {
         $(this).find('form')[0].reset();
     });
 
-    //编辑器初始化
-    var _editer = KindEditor.create('textarea.kindeditor', {
-        basePath: GlobalUrl.base_url+'/lib/kindeditor',
-        allowFileManager: true,
-        bodyClass: 'article-content',
-        afterBlur: function () {  //利用该方法处理当富文本编辑框失焦之后，立即同步数据
-            KindEditor.sync(".kindeditor");
-        }
-    });
+
     //文件上传
     $('#uploaderThumb').uploader({
         autoUpload: true,            // 当选择文件后立即自动进行上传操作

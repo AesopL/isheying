@@ -160,7 +160,7 @@ function upload_file($file, $type = '')
         }
         return str_replace('\\', '/', $path);
     } else {
-       return false;
+        return false;
     }
 }
 /**
@@ -176,7 +176,10 @@ function image_edit($path, $type)
     $image = \think\Image::open(ROOT_PATH . 'public' . $path);
     switch ($type) {
         case 'head_img':
-            $image->thumb(200, 200, Image::THUMB_CENTER)->save(ROOT_PATH . 'public' . $path);
+            $image->thumb(200, 200, \think\Image::THUMB_CENTER)->save(ROOT_PATH . 'public' . $path);
+            break;
+        case 'article_thumb':
+            $image->thumb(400, 400, \think\Image::THUMB_CENTER)->save(ROOT_PATH . 'public' . $path);
             break;
     }
 }

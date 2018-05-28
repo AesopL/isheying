@@ -43,7 +43,6 @@
     <script src="__JS__/layer/layer.js"></script>
     <script src="__LIB__/chosen/chosen.min.js"></script>
     <script src="__LIB__/chosenicons/zui.chosenicons.min.js"></script>
-    <script src="__LIB__/kindeditor/kindeditor.min.js"></script>
     <script src="__LIB__/uploader/zui.uploader.min.js"></script>
     <script src="__LIB__/datetimepicker/datetimepicker.min.js"></script>
     <script>
@@ -52,10 +51,10 @@
         // 定义全局JS变量
         var GlobalUrl = {
             current_controller: "admin/{$controller|default=''}/",
-            base_url: "__STATIC__"
+            base_url: "__STATIC__",
         };
         $('select.chosen-icons').chosenIcons();
-        console.log(GlobalUrl.current_controller);
+        console.log(GlobalUrl);
     </script> {block name="scriptpre"}{/block}
     <script type="text/javascript" src="__JS__/admin.js"></script> {block name="scriptnext"}{/block}
     <script src="__JS__/myfun.js"></script>
