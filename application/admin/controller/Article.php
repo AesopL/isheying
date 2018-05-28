@@ -5,7 +5,7 @@ use app\admin\AdminBase;
 use app\admin\model\Article as ArticleModel;
 use app\admin\model\Category as CategroyModel;
 
-class Article extends \app\admin\AdminBase
+class Article extends AdminBase
 {
     protected $article_model;
     protected $category_model;
@@ -69,7 +69,7 @@ class Article extends \app\admin\AdminBase
             return return_msg('400', $validate_res);
         }
         /*******************  写入数据库  *******************/
-        $res = $this->article_model->allowField(true)->save($data);
+        //$res = $this->article_model->allowField(true)->save($data);
         /*******************  返回信息  *******************/
         if ($res !== false) {
             return return_msg(200, '添加成功');
@@ -113,6 +113,11 @@ class Article extends \app\admin\AdminBase
         }
     }
 
+    /**
+     * 删除文章[包括批量删除]
+     *
+     * @return void
+     */
     public function delete()
     {
         /*******************  接收数据  *******************/
