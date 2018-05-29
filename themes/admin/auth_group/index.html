@@ -8,52 +8,26 @@
         <div class="pull-right">
             <button class="btn btn-primary" data-toggle="modal" data-target="#addMenu">添加管理员</button>
         </div>
-        <form action="#" method="post">
-            <div class="search">
-                搜索名称：
-                <input type="text" class="text" name="topic" placeholder="搜索名称" style="width:150px;"> &nbsp;搜索分类：
-                <div class="btn-group btn-dropdown">
-                    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
-                        <span class="drop-topic">请选择类别</span>
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#">请选择类别</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">分类一</a>
-                        </li>
-                        <li>
-                            <a href="#">分类二</a>
-                        </li>
-                    </ul>
-                </div>
-                &nbsp;是否启用：
-                <div class="btn-group btn-dropdown">
-                    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
-                        <span class="drop-topic">请选择</span>
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#">请选择</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">启用</a>
-                        </li>
-                        <li>
-                            <a href="#">禁用</a>
-                        </li>
-                    </ul>
-                </div>
-                &nbsp;
-                <button type="submit" value="查询" class="btn btn-primary-outline btn-xs">
-                    <i class="icon-search"></i>&nbsp;查询</button>
+        <form action="index" method="post" class="form-inline">
+
+            <div class="form-group">
+                <label for="keyword">搜索名称：</label>
+                <input type="text" class="form-control" name="keyword" value="{$keyword}" placeholder="搜索名称" style="width:150px;">
             </div>
+            &nbsp;
+            <div class="form-group">
+                <label for="status" class="">状态：</label>
+                <select name="status" class="form-control" style="width:150px;">
+                    <option value="">状态</option>
+                    <option value="1" {eq name="status" value="1"} selected="selected"{/eq}>启用</option>
+                    <option value="0" {eq name="status" value="0"} selected="selected"{/eq}>禁用</option>
+                </select>
+            </div>
+            <button type="submit" value="查询" class="btn btn-primary-outline btn-xs">
+                <i class="icon-search"></i>&nbsp;查询
+            </button>
         </form>
+        <br>
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>
@@ -273,7 +247,7 @@
                     if (result.code == 200) {
                         //modal层显示
                         $("#authModal").modal('show');
-                        $("#auth-id").attr("value",_id);
+                        $("#auth-id").attr("value", _id);
                         //zTree初始化
                         zTree = $.fn.zTree.init(tree, setting, result.data);
                     } else {
@@ -303,7 +277,7 @@
                         $("#authModal").modal('hide');
                         layer.msg('授权成功', { icon: 1 });
                         setTimeout(() => {
-                        location.reload();
+                            location.reload();
                         }, 2000);
                     } else {
                         layer.msg('授权失败', { icon: 5 });

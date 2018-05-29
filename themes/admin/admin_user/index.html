@@ -61,7 +61,7 @@
                     </th>
                     <th width="50" class="text-center">ID</th>
                     <th width="200" class="text-center">用户名</th>
-                    <th width="200" class="text-center">创建时间</th>
+                    <th width="200" class="text-center">状态</th>
                     <th width="100" class="text-center">最后登录</th>
                     <th width="150" class="text-center">最后登录ip</th>
                     <th width="140" class="text-center">操作</th>
@@ -75,7 +75,7 @@
                     </td>
                     <td class="text-center">{$vo.id}</td>
                     <td class="text-center">{$vo.username}</td>
-                    <td class="text-center">{$vo.create_at}</td>
+                    <td class="text-center">{$vo.status}</td>
                     <td class="text-center">{$vo.update_at}</td>
                     <td class="text-center">{$vo.login_ip}</td>
                     <td class="text-center">
@@ -219,7 +219,7 @@
         //按钮触发数据的修改
         $(".btn_edit").on('click', function () {
             $("#editForm").find(":input").each(function () {
-                console.log($(this).prop('name'));
+                //console.log($(this).prop('name'));
             });
             // 根据id通过ajax获取点击列的数据
             var id = $(this).attr('data-id');

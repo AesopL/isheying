@@ -14,4 +14,9 @@ class AdminUser extends Model
         return $this->belongsToMany('AuthGroup', 'auth_group_access', 'group_id', 'uid');
     }
 
+    public function getStatusAttr($value){
+        $status = [0=>'禁用',1=>'启用'];
+        return $status[$value];
+    }
+
 }

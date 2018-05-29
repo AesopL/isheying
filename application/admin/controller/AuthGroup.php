@@ -16,11 +16,21 @@ class AuthGroup extends AdminBase
         $this->auth_rule_model = new AuthRuleModel();
     }
 
-    public function index()
+    public function index($keyword = '', $status = '')
     {
-        $auth_groups = $this->auth_group_model->paginate(10);
+        
+        $map = [];
+        if (!empty($keyword)) {
+            $map['title'] = ['like', "%{$keyword}%"];
+        }
+        if ($status !== '') {
+            $map['status'] = $status;
+        }
+        //dump($status);
+        //dump($map);die;
+        $auth_groups = $this->auth_group_model->where($map)->paginate(10);
         $this->assign('auth_groups', $auth_groups);
-        return $this->fetch();
+        return $this->fetch('index', ['keyword' => $keyword,'status'=>$status]);
     }
 
     public function edit()
