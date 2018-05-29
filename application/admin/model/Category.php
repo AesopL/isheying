@@ -5,7 +5,8 @@ use think\Model;
 
 class Category extends Model
 {
-
+    protected $autoWriteTimestamp ='datetime';
+    protected $createTime = 'create_time';
     //返回原有数据  不自动进行时间转换
     public function getCreateTimeAttr($time)
     {
