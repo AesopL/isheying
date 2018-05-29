@@ -11,5 +11,16 @@ class Category extends Model
     {
         return $time;
     }
+
+    /**
+     * 层级列表缩进
+     *
+     * @return void
+     */
+    public function getLevelList()
+    {
+        $list = $this->order(['sort'=>'DESC'])->select();
+        return array2level($list);
+    }
     
 }

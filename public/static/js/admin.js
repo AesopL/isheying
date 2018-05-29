@@ -60,7 +60,7 @@ var Script = function () {
 
     //统一添加数据
     $("#addSubmit").click(function () {
-        formSend('save', $('#addForm').serialize());
+        formSend('/' + GlobalUrl.current_controller + 'save', $('#addForm').serialize());
     });
 
     //$("#btnEdit").click()

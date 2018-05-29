@@ -23,11 +23,11 @@ class Article extends AdminBase
     {
         $map = [];
         /*******************  需要查询的字段  *******************/
-        $field = 'id,title,cid,author,reading,status,is_top,is_recommend,publish_time,sort';
+        $field = 'id,title,cid,author,reading,status,is_top,is_recommend,create_time,update_time,publish_time,sort';
 
         /*******************  是否分类查询  *******************/
         if ($cid > 0) {
-            $category_children_ids = $this->category_model->where(['path' => ['like', "%,{$cid},%"]])->column('id');
+            $category_children_ids = $this->category_model->where(['path' => ['like', "%,{$cid},%"]])->order(['create_time' => 'DESC'])->column('id');
             $category_children_ids = (!empty($category_children_ids) && is_array($category_children_ids)) ? implode(',', $category_children_ids) . ',' . $cid : $cid;
             $map['cid'] = ['IN', $category_children_ids];
         }
@@ -41,7 +41,7 @@ class Article extends AdminBase
         $articles_list = $this->article_model->field($field)->where($map)->order(['publish_time' => 'DESC'])->paginate(15, false, ['page' => $page]);
         $categories_list = $this->category_model->column('name', 'id');
 
-        //dump($articles);
+        //dump($articles_list);
         return $this->fetch('index', ['articles_list' => $articles_list, 'categories_list' => $categories_list, 'cid' => $cid, 'keyword' => $keyword]);
     }
 
@@ -69,7 +69,7 @@ class Article extends AdminBase
             return return_msg('400', $validate_res);
         }
         /*******************  写入数据库  *******************/
-        //$res = $this->article_model->allowField(true)->save($data);
+        $res = $this->article_model->allowField(true)->save($data);
         /*******************  返回信息  *******************/
         if ($res !== false) {
             return return_msg(200, '添加成功');
@@ -99,6 +99,7 @@ class Article extends AdminBase
         }
         /*******************  接收数据  *******************/
         $data = $this->request->param();
+        //dump($data);die;
         /*******************  验证数据  *******************/
         $validate_res = $this->validate($data, 'Article');
         if ($validate_res !== true) {

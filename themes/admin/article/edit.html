@@ -13,10 +13,11 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="title">分类</label>
-                    <select class="form-control" data-placeholder="请选择分类" name="category" id="category">
+                    <select class="form-control" data-placeholder="请选择分类" name="cid" id="cid">
                         <option value=""></option>
-                        {foreach name="categories" item="category"}
-                        <option value="{$category.id}">{$category.name}</option>
+                        {foreach name="categories" item="vo"}
+                        <option value="{$vo.id}" {if condition="$article.cid==$vo.id" } selected="selected" {/if}>{neq name="vo.level" value="1"}|{php}for($i=1;$i
+                            <$vo[ 'level'];$i++){echo ' ----';}{/php}{/neq} {$vo.name}</option>
                         {/foreach}
                     </select>
                 </div>

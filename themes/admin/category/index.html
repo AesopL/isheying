@@ -4,43 +4,40 @@
         <h5>栏目管理</h5>
     </div>
     <div class="panel-body">
-        <div class="pull-right">
-            <a class="btn btn-primary" href="add">添加文章</a>
+        <div class="">
+            <a class="btn btn-primary" href="add">添加栏目</a>
         </div>
         <br>
         <table class="table table-bordered table-hover table-striped">
             <thead>
                 <tr>
-                    <th width="40" class="text-center">
+                    <!-- <th width="40" class="text-center">
                         <input type="checkbox" name="checkbox">
-                    </th>
+                    </th> -->
                     <th width="50" class="text-center">ID</th>
-                    <th width="100" class="text-center">标题</th>
+                    <th width="100" class="text-center">名称</th>
                     <th width="100" class="text-center">分类</th>
-                    <th width="100" class="text-center">作者</th>
-                    <th width="150" class="text-center">状态</th>
-                    <th width="150" class="text-center">阅读量</th>
-                    <th width="100" class="text-center">是否置顶</th>
-                    <th width="100" class="text-center">是否推荐</th>
-                    <th width="50" class="text-center">排序</th>
-                    <th width="150" class="text-center">创建时间</th>
-                    <th width="150" class="text-center">更新时间</th>
-                    <th width="150" class="text-center">发布时间</th>
+                    <th width="100" class="text-center">内容</th>
+                    <th width="150" class="text-center">排序</th>
                     <th width="140" class="text-center">操作</th>
                 </tr>
             </thead>
             <tbody>
                 {foreach name="categories" item="vo"}
                 <tr>
-                    <td class="text-center">
+                    <!-- <td class="text-center">
                         <input type="checkbox" name="BatchRemove" data-id="{$vo.id}">
-                    </td>
+                    </td> -->
                     <td class="text-center">{$vo.id}</td>
                     <td class="text-center">{$vo.name}</td>
+                    <td class="text-center">{$vo.alias}</td>
                     <td class="text-center">{$vo.content}</td>
-                    <td class="text-center">{$vo.create_time}</td>
+                    <td class="text-center">{$vo.sort}</td>
                     <td class="text-center">
-                        <a href="{:url('admin/category/edit',['id'=>$vo['id']])}" class="btn btn-sm btn-success btn_edit">
+                        <a href="{:url('admin/category/add',['pid'=>$vo['id']])}" class="btn btn-sm btn-info">
+                            <i class="icon-edit"></i> 添加子栏目
+                        </a>
+                        <a href="{:url('admin/category/edit',['id'=>$vo['id']])}" class="btn btn-sm btn-success">
                             <i class="icon-edit"></i> 编辑
                         </a>
                         <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{$vo.id}">
@@ -51,9 +48,9 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="15">
+                    <!-- <th colspan="15">
                         <button type="button" class="btn btn-danger btn-batch-remove">
-                            <i class="icon-trash"></i> 批量删除</button>
+                            <i class="icon-trash"></i> 批量删除</button> -->
                         <div class="pull-right">
                             {$categories->render()}
                         </div>
@@ -63,7 +60,5 @@
         </table>
     </div>
 </div>
-
-
 
 {/block}
