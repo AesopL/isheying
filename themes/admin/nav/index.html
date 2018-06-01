@@ -1,0 +1,304 @@
+{extend name="base" /} {block name="body"}
+<div class="panel">
+    <div class="panel-heading">
+        <h5>导航管理</h5>
+    </div>
+    <div class="panel-body">
+        <div class="pull-right">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addNav">添加导航</button>
+        </div>
+        <form action="#" method="post">
+            <div class="search">
+                搜索名称：
+                <input type="text" class="text" name="topic" placeholder="搜索名称" style="width:150px;"> &nbsp;搜索分类：
+                <div class="btn-group btn-dropdown">
+                    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                        <span class="drop-topic">请选择类别</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#">请选择类别</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">分类一</a>
+                        </li>
+                        <li>
+                            <a href="#">分类二</a>
+                        </li>
+                    </ul>
+                </div>
+                &nbsp;是否启用：
+                <div class="btn-group btn-dropdown">
+                    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                        <span class="drop-topic">请选择</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#">请选择</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">启用</a>
+                        </li>
+                        <li>
+                            <a href="#">禁用</a>
+                        </li>
+                    </ul>
+                </div>
+                &nbsp;
+                <button type="submit" value="查询" class="btn btn-primary-outline btn-xs">
+                    <i class="icon-search"></i>&nbsp;查询</button>
+            </div>
+        </form>
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th width="40" class="text-center">
+                        <input type="checkbox" name="checkbox">
+                    </th>
+                    <th width="50" class="text-center">ID</th>
+                    <th width="200" class="text-center">名称</th>
+                    <th width="200" class="text-center">排序</th>
+                    <th width="100" class="text-center">状态</th>
+                    <th width="140" class="text-center">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {foreach name="navs_level" item="vo"}
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="BatchRemove" data-id="{$vo.id}">
+                    </td>
+                    <td class="text-center">{$vo.id}</td>
+                    <td class="text-center">{neq name="vo.level" value="1"}|{php}for($i=1;$i
+                        <$vo[ 'level'];$i++)echo "--";{/php}{/neq}{$vo.name}</td>
+                            <td class="text-center">{$vo.sort}</td>
+                            <td class="text-center">{$vo.status}</td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-sm btn-success btn_edit" data-id="{$vo.id}">
+                                    <i class="icon-edit"></i> 编辑
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{$vo.id}">
+                                    <i class="icon-trash"></i> 删除
+                                </button>
+                            </td>
+                </tr>
+                {/foreach}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <!-- <th width="40" class="text-center">
+                        <input type="checkbox" name="checkbox">
+                    </th> -->
+                    <th colspan="8">
+                        <button type="button" class="btn btn-danger btn-batch-remove">
+                            <i class="icon-trash"></i> 批量删除</button>
+                        <div class="pull-right">
+                        </div>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<!-- 添加modal层 -->
+<div class="modal form-modal fade" id="addNav">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="save" id="addForm" onsubmit="return false">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">添加导航</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="">上级菜单</label>
+                        <select class="form-control" name="pid">
+                            <option value="0">一级菜单</option>
+                            {foreach name="navs_level" item="vo"}
+                            <option value="{$vo.id}">{neq name="vo.level" value="1"}|{php}for($i=1;$i
+                                <$vo[ 'level'];$i++){echo ' ----';}{/php}{/neq} {$vo.name}</option>
+                                    {/foreach}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">名称</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alias">别名</label>
+                        <input type="text" name="alias" class="form-control" id="alias" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="link">链接</label>
+                        <input type="text" name="link" class="form-control" id="link" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="icon">图标</label>
+                        <input type="text" name="icon" class="form-control" id="icon" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="target">跳转方式</label>
+                        <select name="target" id="" class="form-control">
+                            <option value="_blank">新标签</option>
+                            <option value="_self">当前页</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">启用
+                            <input type="radio" name="status" value="1" id="status" title="显示" checked="checked">
+                        </label>
+                        <label for="status">禁用
+                            <input type="radio" name="status" value="0" id="status" title="隐藏">
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sort">排序</label>
+                        <input type="text" name="sort" class="form-control" id="sort" placeholder="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="addSubmit">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- 添加modal层 -->
+<div class="modal form-modal fade" id="editNav">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="save" id="editForm" onsubmit="return false">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">添加导航</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">上级菜单</label>
+                        <select class="form-control" name="pid" id="edit-pid">
+                            <option value="0">一级菜单</option>
+                            {foreach name="navs_level" item="vo"}
+                            <option value="{$vo.id}">{neq name="vo.level" value="1"}|{php}for($i=1;$i
+                                <$vo[ 'level'];$i++){echo ' ----';}{/php}{/neq} {$vo.name}</option>
+                                    {/foreach}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">名称</label>
+                        <input type="text" name="name" class="form-control" id="edit-name" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alias">别名</label>
+                        <input type="text" name="alias" class="form-control" id="edit-alias" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="link">链接</label>
+                        <input type="text" name="link" class="form-control" id="edit-link" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="icon">图标</label>
+                        <input type="text" name="icon" class="form-control" id="edit-icon" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="target">跳转方式</label>
+                        <select name="target" id="edit-target" class="form-control">
+                            <option value="_blank">新标签</option>
+                            <option value="_self">当前页</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">启用
+                            <input type="radio" name="status" value="1" id="status" title="显示" checked="checked">
+                        </label>
+                        <label for="status">禁用
+                            <input type="radio" name="status" value="0" id="status" title="隐藏">
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sort">排序</label>
+                        <input type="text" name="sort" class="form-control" id="edit-sort" placeholder="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="text" name="id" value="" id="edit-id" hidden>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="editSubmit">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/block} {block name="scriptnext"}
+<script type='text/javascript'>
+    $(document).ready(function () {
+        //按钮触发数据的修改
+        $(".btn_edit").on('click', function () {
+            // 根据id通过ajax获取点击列的数据
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: 'edit',
+                async: false,//同步，会阻塞操作
+                type: 'get',//GET
+                data: { id: id },
+                complete: function (msg) {
+                    //console.log('完成了');
+                },
+                success: function (result) {
+                    // console.log(result);
+                    if (result.code == 200 && result.data !== '') {
+                        $("#editNav").modal('show');
+                        $('#edit-pid option').each(function () {
+                            if ($(this).val() == result['data']['pid']) {
+                                $(this).prop('selected', true);
+                            }
+                        });
+                        $('#edit-id').val(result['data']['id']);
+                        $("#edit-name").val(result['data']['name']);
+                        $("#edit-sort").val(result['data']['sort']);
+                        $("#edit-alias").val(result['data']['alias']);
+                        $("#edit-icon").attr("data-value", result['data']['icon']);
+                        console.log(result['data']['icon']);
+                        if (result['data']['status'] == 0) {
+                            $("#edit-status").attr("checked", true);
+                        }
+                    } else {
+                        $("#editNav").modal('hide');
+                        layer.msg(result.msg, { icon: 2 });
+                    }
+                }
+            });
+        });
+
+    });
+
+
+</script> {/block}
