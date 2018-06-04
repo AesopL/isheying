@@ -30,7 +30,7 @@ class Nav extends AdminBase
     public function edit($id)
     {
         $data = $this->nav_model->get($id);
-        return return_msg(200,'获取成功',$data);
+        return return_msg(200, '获取成功', $data);
     }
 
     /**
@@ -64,21 +64,44 @@ class Nav extends AdminBase
     {
         /*******************  判断请求  *******************/
         if (!$this->request->param()) {
-            return return_msg(400,'请求错误');
+            return return_msg(400, '请求错误');
         }
         /*******************  接收参数  *******************/
         $data = $this->request->param();
         //dump($data);
         /*******************  验证数据  *******************/
-        $validate_res = $this->validate($data,'Nav');
+        $validate_res = $this->validate($data, 'Nav');
         if ($validate_res !== true) {
-            return return_msg(400,$validate_res);
+            return return_msg(400, $validate_res);
         }
         /*******************  写入数据  *******************/
-        $res = $this->nav_model->allowField(true)->save($data,$data['id']);
+        $res = $this->nav_model->allowField(true)->save($data, $data['id']);
         /*******************  返回信息  *******************/
-        if ($res !==false) {
-            return return_msg(200,'修改成功');
+        if ($res !== false) {
+            return return_msg(200, '修改成功');
         }
+    }
+
+    public function delete()
+    {
+        /*******************  验证请求类型  *******************/
+        if ($this->request->isAjax()) {
+            /*******************  接收参数  *******************/
+            $id = $this->request->param('id');
+            // dump($id);
+            /*******************  判断是否有子栏目  *******************/
+            $son_nav = $this->nav_model->where('pid', $id)->find();
+            if (!empty($son_nav)) {
+                return $this->return_msg(201, '该栏目下有子目录，不能删除');
+            }
+            /*******************  删除数据  *******************/
+            $res = $this->nav_model->where('id', 'in', $id)->delete();
+            if ($res !== false) {
+                return $this->return_msg(200, '删除成功');
+            } else {
+                return $this->return_msg(400, '删除失败');
+            }
+        }
+
     }
 }
