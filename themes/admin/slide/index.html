@@ -1,0 +1,286 @@
+{extend name="base" /} {block name="style"}
+<link rel="stylesheet" href="__LIB__/uploader/zui.uploader.min.css"> {/block} {block name="body"}
+<div class="panel">
+    <div class="panel-heading">
+        <h5>轮播分类</h5>
+    </div>
+    <div class="panel-body">
+        <div class="pull-right">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addNav">添加图片</button>
+        </div>
+        <form action="index" method="post" class="form-inline">
+
+            <div class="form-group">
+                <label for="keyword">搜索名称：</label>
+                <input type="text" class="form-control" name="keyword" value="{$keyword}" placeholder="搜索名称" style="width:150px;">
+            </div>
+            &nbsp;
+
+            <button type="submit" value="查询" class="btn btn-primary-outline btn-xs">
+                <i class="icon-search"></i>&nbsp;查询
+            </button>
+        </form>
+        <br>
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th width="40" class="text-center">
+                        <input type="checkbox" name="checkbox">
+                    </th>
+                    <th width="50" class="text-center">ID</th>
+                    <th width="200" class="text-center">排序</th>
+                    <th width="200" class="text-center">名称</th>
+                    <th width="200" class="text-center">分类</th>
+                    <th width="200" class="text-center">状态</th>
+                    <th width="140" class="text-center">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {foreach name="slides" item="vo"}
+                <tr>
+                    <td class="text-center">
+                        <input type="checkbox" name="BatchRemove" data-id="{$vo.id}">
+                    </td>
+                    <td class="text-center">{$vo.id}</td>
+                    <td class="text-center">{$vo.sort}</td>
+                    <td class="text-center">{$vo.name}</td>
+                    <td class="text-center">{$slidecategory[$vo.cid]}</td>
+                    <td class="text-center">{$vo.status}</td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-sm btn-success btn_edit" data-id="{$vo.id}">
+                            <i class="icon-edit"></i> 编辑
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger btn-delete" data-id="{$vo.id}">
+                            <i class="icon-trash"></i> 删除
+                        </button>
+                    </td>
+                </tr>
+                {/foreach}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <!-- <th width="40" class="text-center">
+                        <input type="checkbox" name="checkbox">
+                    </th> -->
+                    <th colspan="8">
+                        <button type="button" class="btn btn-danger btn-batch-remove">
+                            <i class="icon-trash"></i> 批量删除</button>
+                        <div class="pull-right">
+                        </div>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+        {$slides->render()}
+    </div>
+</div>
+
+<!-- 添加modal层 -->
+<div class="modal form-modal fade" id="addNav">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="save" id="addForm" onsubmit="return false">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">添加分类</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="cid">分类</label>
+                        <select name="cid" id="cid" class="form-control">
+                            {foreach name="$slidecategory" item="vo"}
+                            <option value="{$key}">{$vo}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">名称</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">描述</label>
+                        <input type="text" name="description" class="form-control" id="description" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="thumb">上传图片</label>
+                        <div id="add-uploaderImg" class="uploader uploaderImg">
+                            <input type="text" hidden name="thumb" id="thumb">
+                            <div class="file-list" data-drag-placeholder="请拖拽文件到此处"></div>
+                            <button type="button" class="btn btn-primary uploader-btn-browse">
+                                <i class="icon icon-cloud-upload"></i> 选择文件
+                            </button>
+                        </div>
+                    </div>
+
+                    <input type="text" hidden name="link" value="">
+                    <div class="form-group">
+                        <label for="target">跳转</label>
+                        <select name="target" class="form-control" id="">
+                            <option value="">新标签</option>
+                            <option value="">当前</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">状态</label>
+                        <input type="radio" name="status" id="" placeholder="">显示
+                        <input type="radio" name="status" id="" placeholder="">隐藏
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sort">排序</label>
+                        <input type="text" name="sort" class="form-control" id="name" placeholder="">
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="addSubmit">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- 添加modal层 -->
+<div class="modal form-modal fade" id="editNav">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="save" id="editForm" onsubmit="return false">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                        <span class="sr-only">关闭</span>
+                    </button>
+                    <h4 class="modal-title">编辑分类</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="cid">分类</label>
+                        <select name="cid" id="edit-cid" class="form-control">
+                            {foreach name="$slidecategory" item="vo"}
+                            <option value="{$key}">{$vo}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">名称</label>
+                        <input type="text" name="name" class="form-control" id="edit-name" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">描述</label>
+                        <input type="text" name="description" class="form-control" id="edit-description" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" hidden name="link">
+                        <div class="col-md-4">
+                            <img src="" id="imgUrl" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <label for="thumb">上传图片</label>
+                            <div id="edit-uploaderImg" class="uploader uploaderImg">
+                                <div class="file-list" data-drag-placeholder="请拖拽文件到此处"></div>
+                                <button type="button" class="btn btn-primary uploader-btn-browse">
+                                    <i class="icon icon-cloud-upload"></i> 选择文件
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="target">跳转</label>
+                        <select name="target" class="form-control" id="edit-target">
+                            <option value="1">新标签</option>
+                            <option value="0">当前</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">状态</label>
+                        <input type="radio" value="1" name="status" id="" checked>显示
+                        <input type="radio" value="0" name="status" id="edit-status">隐藏
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sort">排序</label>
+                        <input type="text" name="sort" class="form-control" id="edit-sort" placeholder="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="text" name="id" value="" id="edit-id" hidden>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="editSubmit">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{/block} {block name="scriptnext"}
+<script type='text/javascript'>
+    $(document).ready(function () {
+        //按钮触发数据的修改
+        $(".btn_edit").on('click', function () {
+            // 根据id通过ajax获取点击列的数据
+            var id = $(this).attr('data-id');
+            $.ajax({
+                url: 'edit',
+                async: false,//同步，会阻塞操作
+                type: 'get',//GET
+                data: { id: id },
+                success: function (result) {
+                    // console.log(result);
+                    if (result.code == 200 && result.data !== '') {
+                        $("#editNav").modal('show');
+                        $('#edit-id').val(result['data']['id']);
+                        $("#edit-name").val(result['data']['name']);
+                        $('#edit-cid option').each(function () {
+                            if ($(this).val() == result['data']['cid']) {
+                                $(this).prop('selected', true);
+                            }
+                        });
+
+                         $('#edit-target option').each(function () {
+                            if ($(this).val() == result['data']['target']) {
+                                $(this).prop('selected', true);
+                            }
+                        });
+
+                        $("#edit-description").val(result['data']['description']);
+
+                        $("#edit-sort").val(result['data']['sort']);
+                        $("#edit-link").attr('value', result['data']['link']);
+                        $("#imgUrl").attr('src', result['data']['link']);
+
+                        console.log(result['data']['icon']);
+                        if (result['data']['status'] == 0) {
+                            $("#edit-status").attr("checked", true);
+                        }
+                    } else {
+                        $("#editSlide").modal('hide');
+                        layer.msg(result.msg, { icon: 2 });
+                    }
+                }
+            });
+        });
+
+        //上传图片
+        $('.uploaderImg').on('click', function () {
+            uploadImg('uploadSlider');
+        });
+
+         
+
+    });
+
+</script> {/block}
