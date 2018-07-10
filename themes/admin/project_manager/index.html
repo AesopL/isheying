@@ -1,0 +1,62 @@
+ {extend name="base" /} {block name="style"}
+<link rel="stylesheet" href="__LIB__/fishBone/css/fishBone.css" /> {/block} {block name="body"}
+<div class="panel-group" id="accordionPanels" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading" id="headingOne">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordionPanels" href="#collapseOne">
+                    浦东三林
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="fishBone" />
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" id="headingTwo">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordionPanels" href="#collapseTwo">
+                    上海湾
+                </a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse">
+            <div class="panel-body">折叠面板内容 2</div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" id="headingThree">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordionPanels" href="#collapseThree">
+                    折叠面板 3
+                </a>
+            </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse">
+            <div class="panel-body">折叠面板内容 3</div>
+        </div>
+    </div>
+</div>
+
+{/block} {block name="scriptpre"}
+<script type="text/javascript" src="__LIB__/fishBone/js/fishBone.js"></script>
+<script type="text/javascript" src="__LIB__/fishBone/js/jquery.SuperSlide.2.1.1.js"></script>
+<script>
+    data = [{ '审理时间': '12-20 至 12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号' }, { '审理时间': '12-20 至 12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号' }, { '审理时间': '12-20 至 12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号(当前案件)' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号(当前案件)' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号(当前案件)' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号(当前案件)' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号(当前案件)' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号(当前案件)' }];
+    data1 = [
+        {"name": "Quality","开始时间":"7-10","结束时间":"7-10"},
+        {"name": "Method","开始时间":"7-10","结束时间":"7-10"},
+        {"name": "Material","开始时间":"7-10","结束时间":"7-10"},
+        {"name": "Man Power","开始时间":"7-10","结束时间":"7-10"},
+        {"name": "Measurement","开始时间":"7-10","结束时间":"7-10"},
+        {"name": "Milieu","开始时间":"7-10","结束时间":"7-10"}
+
+    ];
+    $(function () {
+        //创建数据
+        $(".fishBone").fishBone(data1);
+    });
+</script> {/block}

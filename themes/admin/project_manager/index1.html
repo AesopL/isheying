@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>dataAna.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <link rel="stylesheet" type="text/css" href="__LIB__/project_manager/css/common.css">
+    <link rel="stylesheet" type="text/css" href="__LIB__/project_manager/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="__LIB__/project_manager/css/jsgantt.css"/>
+    <link rel="stylesheet" href="__LIB__/project_manager/css/jquery-ui-1.8.5.custom.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="__LIB__/project_manager/css/Timeglider.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<script type="text/javascript" src="__LIB__/project_manager/js/jquery.min.1.8.2.js"></script>
+	<!-- <script type="text/javascript" src="__LIB__/project_manager/js/jquery.mousewheel.js"></script> -->
+	<script type="text/javascript" src="__LIB__/project_manager/js/common.js"></script>
+	<script type="text/javascript">
+
+	</script>
+	<!-- <script language="javascript" src="assets/js/gantt/testGantt.js"></script> -->
+	<script language="javascript" src="__LIB__/project_manager/js/gantt/jsgantt.js"></script>
+    <script type="text/javascript" src="__LIB__/project_manager/js/caseField.js"></script>
+    <script>
+    var LIB={
+		lib:"__LIB__",
+	};    
+    </script>
+	<!--[if lt IE 9]>
+	  <script type="text/javascript" src="assets/PIE-2.0beta/PIE_IE678.js"></script>
+	<![endif]-->
+	<!--[if IE 9]>
+	  <script type="text/javascript" src="assets/PIE-2.0beta/PIE_IE9.js"></script>
+	<![endif]-->
+  </head>
+  
+  <body style="overflow: hidden;">
+    <div id="main">
+    	<div class="gantt_left">
+    		<div class="gantt_menu_top" title="上"></div>
+    		<ul class="gantt_leftul" id="gantt_leftul">
+    			<li>
+    				<div class="gantt_leftula"></div>
+    				<div class="gantt_leftulc">
+    					<span>上海</span><div class="gantt_leftulb"></div>
+    				</div>
+    			</li>
+    			<li>
+    				<div class="gantt_leftula"></div>
+    				<div class="gantt_leftulc">
+    					<span>深圳</span><div class="gantt_leftulb"></div>
+    				</div>
+    			</li>
+    			<li>
+    				<div class="gantt_leftula"></div>
+    				<div class="gantt_leftulc">
+    					<span>广州</span><div class="gantt_leftulb"></div>
+    				</div>
+    			</li>
+    			<li>
+    				<div class="gantt_leftula"></div>
+    				<div class="gantt_leftulc">
+    					<span>广东</span><div class="gantt_leftulb"></div>
+    				</div>
+    			</li>
+    			<li>
+    				<div class="gantt_leftula"></div>
+    				<div class="gantt_leftulc">
+    					<span>湖南</span><div class="gantt_leftulb"></div>
+    				</div>
+    			</li>
+    			<li>
+    				<div class="gantt_leftula"></div>
+    				<div class="gantt_leftulc">
+    					<span>北京</span><div class="gantt_leftulb"></div>
+    				</div>
+    			</li>
+    			<li>
+    				<div class="gantt_leftula"></div>
+    				<div class="gantt_leftulc">
+    					<span>河南</span><div class="gantt_leftulb"></div>
+    				</div>
+    			</li>
+    		</ul>
+    		<div class="gantt_menu_bottom" title="下"></div>
+	    	<div class="po_menu" id="menu">
+				<div class="po_xztop"></div>
+				<ul>
+					<li>上海</li>
+					<li>aa</li>
+					<li>bb</li>
+				</ul>
+				<div class="links_xzbottom"></div>
+			</div>
+    	</div>
+    	<div class="gantt_right">
+    		<div class="gantt_border"></div>
+    		<div class="calendar_menu marginLeft15">
+				<ul class="fl menu_two">
+					<li>
+						<div class="menu_two_one">吃饭</div>
+					</li>
+					<li>
+						<div class="menu_two_two">唱歌</div>
+					</li>
+					<li>
+						<div class="menu_two_there">看书</div>
+					</li>
+					<li>
+						<div class="menu_two_four">逛街</div>
+					</li>
+					<li>
+						<div class="menu_two_five">哈哈</div>
+					</li>
+				</ul>
+			</div>
+			<!-- <div class="gantt_time">
+				<button class="gantt_year">年</button>
+				<button class="gantt_month">月</button>
+			</div> -->
+			<div class="time_sjz">
+				<div class="time-resizable">
+					<div id='p1'></div>
+					<div class='timeradius_left'></div>	
+					<div class='timeradius_right'></div>
+					<div class='timeglider_left' title='左'></div>
+					<div class='timeglider_right' title='右'></div>
+				</div>
+				<div class="time_boost marginTop10" id="GanttChartDIV"></div>
+			</div>
+    	</div>
+    </div>
+  <script src="__LIB__/project_manager/js/gantt/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__LIB__/project_manager/js/gantt/jquery-ui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__LIB__/project_manager/js/gantt/underscore-min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__LIB__/project_manager/js/gantt/backbone-min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__LIB__/project_manager/js/gantt/jquery.tmpl.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__LIB__/project_manager/js/gantt/ba-debug.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__LIB__/project_manager/js/gantt/ba-tinyPubSub.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__LIB__/project_manager/js/gantt/jquery.mousewheel.min.js" type="text/javascript" charset="utf-8"></script>
+	<!-- <script src="js/jquery.ui.ipad.js" type="text/javascript" charset="utf-8"></script> -->
+	<script src="__LIB__/project_manager/js/gantt/jquery.global.js" type="text/javascript" charset="utf-8"></script>	
+	<script src="__LIB__/project_manager/js/gantt/TG_Date.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__LIB__/project_manager/js/gantt/TG_Org.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__LIB__/project_manager/js/gantt/TG_Timeline.js" type="text/javascript" charset="utf-8"></script> 
+	<script src="__LIB__/project_manager/js/gantt/TG_TimelineView.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__LIB__/project_manager/js/gantt/TG_Mediator.js" type="text/javascript" charset="utf-8"></script> 
+	<script src="__LIB__/project_manager/js/gantt/timeglider.timeline.widget.js" type="text/javascript"></script>
+  </body>
+</html>
