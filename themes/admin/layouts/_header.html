@@ -1,49 +1,53 @@
 <!-- 头部 -->
-<header class="header">
-    <div class="header-left">
-        <div class="sidebar-toggle">
-            <i class="icon icon-bars"></i>
-        </div>
-        <div class="logo">
-            <span class="text-primary">admin</span>
-        </div>
-    </div>
-    <div class="header-search">
-        <form method="post">
-            <div class="search-group">
-                <i class="icon icon-search"></i>
-                <input type="text" class="form-control" placeholder="搜点什么吧...">
+<div class="row">
+    <div class="col-md-12">
+        <header class="header">
+            <div class="header-left">
+                <div class="sidebar-toggle">
+                    <i class="icon icon-bars"></i>
+                </div>
+                <div class="logo">
+                    <span class="text-primary">admin</span>
+                </div>
             </div>
-        </form>
+            <div class="header-search">
+                <form method="post">
+                    <div class="search-group">
+                        <i class="icon icon-search"></i>
+                        <input type="text" class="form-control" placeholder="搜点什么吧...">
+                    </div>
+                </form>
+            </div>
+            <div class="header-user">
+                <div class="item dropdown">
+                    <span class="badge label label-dot label-danger"></span>
+                    <i class="icon icon-comments"></i>
+                </div>
+                <div class="item dropdown">
+                    <span class="badge label label-dot label-warning"></span>
+                    <i class="icon icon-bell-alt"></i>
+                </div>
+                <div class="item dropdown">
+                    <span data-toggle="dropdown">
+                        <img src="__IMAGES__/avatar.jpg" class="avatar" alt="">
+                        <span>{:session('admin_name')}</span>
+                        <span class="caret"></span>
+
+                    </span>
+                    <ul class="dropdown-menu pull-right">
+                        <li>
+                            <a href="#">修改头像</a>
+                        </li>
+                        <li>
+                            <a href="#">修改资料</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="{:url('admin/login/logout')}">注销</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
     </div>
-    <div class="header-user">
-        <div class="item dropdown">
-            <span class="badge label label-dot label-danger"></span>
-            <i class="icon icon-comments"></i>
-        </div>
-        <div class="item dropdown">
-            <span class="badge label label-dot label-warning"></span>
-            <i class="icon icon-bell-alt"></i>
-        </div>
-        <div class="item dropdown">
-            <span data-toggle="dropdown">
-                <img src="__IMAGES__/avatar.jpg" class="avatar" alt="">
-                <span>{:session('admin_name')}</span>
-                <span class="caret"></span>
-              
-            </span>
-            <ul class="dropdown-menu pull-right">
-                <li>
-                    <a href="#">修改头像</a>
-                </li>
-                <li>
-                    <a href="#">修改资料</a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="{:url('admin/login/logout')}">注销</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</header>
+</div>

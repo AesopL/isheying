@@ -20,21 +20,26 @@
         <!-- 侧边栏 -->
         {include file="layouts/_aside"}
         <div class="main-content">
-            <div class="wrapper">
-                <ol class="breadcrumb">
-                    <!-- <li>
-                        <a href="#">
-                            <i class="icon icon-home"></i> 主页
-                        </a>
-                    </li> -->
-                    {foreach $breadcrumbs as $breadcrumb}
-                    <li>
-                        <a href="#">{$breadcrumb}</a>
-                    </li>
-                    {/foreach}
-                </ol>
-                {block name="body"} {/block}
+            <div class="row">
+                <div class="col-md-12 col-xs-12 col-sm-12">
+                    <div class="wrapper">
+                        <ol class="breadcrumb">
+                            <!-- <li>
+                            <a href="#">
+                                <i class="icon icon-home"></i> 主页
+                            </a>
+                        </li> -->
+                            {foreach $breadcrumbs as $breadcrumb}
+                            <li>
+                                <a href="#">{$breadcrumb}</a>
+                            </li>
+                            {/foreach}
+                        </ol>
+                        {block name="body"} {/block}
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
     <script type="text/javascript" src="__LIB__/jquery/jquery.js"></script>

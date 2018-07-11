@@ -1,0 +1,119 @@
+{extend name="base"} {block name="body"}
+<div class="panel-group" id="accordionPanels" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h4>
+                <a href="job_log">
+                    <i class="icon icon-bar-chart"></i> 浦东三林(当前进度：进场安装8天)</a>
+            </h4>
+            <ul class="time-horizontal">
+                <span></span>
+            </ul>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" id="headingOne">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordionPanels" href="#collapseOne">
+                    进场
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <table class="table">
+
+                    {for start="0" end="5"}
+                    <tr>
+                        <th>7-1{$i}</th>
+                        <td>工作内容{$i}</td>
+                    </tr>
+                    {/for}
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" id="headingTwo">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordionPanels" href="#collapseTwo">
+                    接线
+                </a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse">
+            <div class="panel-body">折叠面板内容 2</div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" id="headingThree">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordionPanels" href="#collapseThree">
+                    折叠面板 3
+                </a>
+            </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse">
+            <div class="panel-body">
+                工作内容
+                <div style="width: 500px;height: 500px;">
+                    <div style="width: 100%;height: 150px;">
+                        <div style="width: 100px;height: 150px;float: left;">
+                            <img src="__IMAGES__/avatar.jpg" class="img-circle" style="margin-top: 20px;" width="100px" height="100px" alt="">
+                        </div>
+                        <div style="width: 400px;height: 150px;float: right;">
+                            <p>姓名：张三</p>
+                            <p>联系方式：1388888888</p>
+                            <p></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                        <table class="table table-condensed" style="margin-top: 10px;width: 500px;height: 300px;">
+                            <tr>
+                                <th style="width: 50px;">序号</th>
+                                <th style="width: 50px;">时间</th>
+                                <th style="width: 200px;">工作标题</th>
+                                <th>备注</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>7-10</td>
+                                <td>
+                                    <a href="log_detail">测试标题</a>
+                                </td>
+                                <td>有</td>  
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>7-10</td>
+                                <td>
+                                    <a href="log_detail">测试数据详情</a>
+                                </td>
+                                <td>有</td> 
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>7-10</td>
+                                <td>
+                                    <a href="log_detail">测试数据详情</a>
+                                </td>
+                                <td>有</td> 
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>7-10</td>
+                                <td>
+                                    <a href="log_detail">测试数据详情</a>
+                                </td>
+                                <td>有</td> 
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

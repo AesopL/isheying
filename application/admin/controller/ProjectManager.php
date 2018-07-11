@@ -9,4 +9,20 @@ class ProjectManager extends AdminBase{
     public function index(){
         return $this->fetch();
     }
+
+    public function add(){
+        return $this->fetch();
+    }
+
+    public function job_log(){
+        return $this->fetch();
+    }
+
+    public function log_detail(){
+        return $this->fetch();
+    }
+
+    public function add_job_log(){
+        return $this->fetch();  
+    }
 }

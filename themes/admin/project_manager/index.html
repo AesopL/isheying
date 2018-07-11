@@ -1,62 +1,118 @@
  {extend name="base" /} {block name="style"}
-<link rel="stylesheet" href="__LIB__/fishBone/css/fishBone.css" /> {/block} {block name="body"}
+<link rel="stylesheet" href="__LIB__/project_manager/timeline.css" /> {/block} {block name="body"}
 <div class="panel-group" id="accordionPanels" aria-multiselectable="true">
-    <div class="panel panel-default">
-        <div class="panel-heading" id="headingOne">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordionPanels" href="#collapseOne">
-                    浦东三林
-                </a>
-            </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in">
-            <div class="panel-body">
-                <div class="fishBone" />
+        <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>
+                        <a href="job_log">
+                            <i class="icon icon-bar-chart"></i> 浦东三林(当前进度：进场安装8天)</a>
+                    </h4>
+                    <ul class="time-horizontal">
+                        <span class="warning"></span>
+                    </ul>
+                </div>
             </div>
+    {for start="0" end="10"}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h4>
+                <a href="job_log">
+                    <i class="icon icon-bar-chart"></i> 浦东三林{$i}(当前进度：进场安装8天)</a>
+            </h4>
+            <ul class="time-horizontal">
+                <span class="info"></span>
+            </ul>
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading" id="headingTwo">
+    {/for}
+
+    <div class="panel">
+        <div class="panel-heading">
             <h4 class="panel-title">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordionPanels" href="#collapseTwo">
-                    上海湾
-                </a>
+                中海塆
             </h4>
         </div>
-        <div id="collapseTwo" class="panel-collapse collapse">
-            <div class="panel-body">折叠面板内容 2</div>
+        <div class="panel-body">
+            <ul class="time-horizontal hidden-md">
+                <span class="warning"></span>
+                <li>
+                    <b class="success"></b>
+                    <a type="button" href="job_log" target="_blank" class="btn btn-info btn-sm" id="myPopover">画图
+                    </a>
+                    <p>工程用时：8天</p>
+                </li>
+                <li>
+                    <b class="warning"></b>
+                    <button type="button" class="btn btn-info btn-sm" id="myPopover1">加工生产</button>
+                </li>
+                <li>
+                    <b></b>
+                    <button type="button" class="btn btn-info btn-sm" id="myPopover1">安装进场</button>
+                </li>
+
+            </ul>
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading" id="headingThree">
-            <h4 class="panel-title">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordionPanels" href="#collapseThree">
-                    折叠面板 3
-                </a>
-            </h4>
+
+    {for start="0" end="5"}
+    <div class="panel">
+        <div class="panel-heading">
+            <h4 class="panel-title"> 徐家汇</h4>
         </div>
-        <div id="collapseThree" class="panel-collapse collapse">
-            <div class="panel-body">折叠面板内容 3</div>
+        <div class="panel-body">
+            <ul class="time-horizontal">
+                <span></span>
+                <li>
+                    <b class="success"></b>
+                    <button type="button" class="btn btn-info btn-sm" id="myPopover">画图</button>
+                </li>
+                <li>
+                    <b class="warning"></b>
+                    <button type="button" class="btn btn-info btn-sm" id="myPopover1">加工生产</button>
+                </li>
+                <li>
+                    <b></b>
+                    <button type="button" class="btn btn-info btn-sm" id="myPopover1">安装进场</button>
+                </li>
+            </ul>
         </div>
     </div>
+    {/for}
 </div>
 
 {/block} {block name="scriptpre"}
-<script type="text/javascript" src="__LIB__/fishBone/js/fishBone.js"></script>
-<script type="text/javascript" src="__LIB__/fishBone/js/jquery.SuperSlide.2.1.1.js"></script>
 <script>
-    data = [{ '审理时间': '12-20 至 12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号' }, { '审理时间': '12-20 至 12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号' }, { '审理时间': '12-20 至 12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号(当前案件)' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号(当前案件)' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号(当前案件)' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号(当前案件)' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号(当前案件)' }, { '审理时间': '2014-12-20 至 2014-12-20', '承办庭室': 'XXXX', '承办法官': 'XXX', '承办法院': 'XXXXXXX法院', '案件状态': 'XX', '案号': '(XXXX)XXXXXX第XXXX号(当前案件)' }];
-    data1 = [
-        {"name": "Quality","开始时间":"7-10","结束时间":"7-10"},
-        {"name": "Method","开始时间":"7-10","结束时间":"7-10"},
-        {"name": "Material","开始时间":"7-10","结束时间":"7-10"},
-        {"name": "Man Power","开始时间":"7-10","结束时间":"7-10"},
-        {"name": "Measurement","开始时间":"7-10","结束时间":"7-10"},
-        {"name": "Milieu","开始时间":"7-10","结束时间":"7-10"}
-
-    ];
     $(function () {
-        //创建数据
-        $(".fishBone").fishBone(data1);
+        $('[data-toggle="popover"]').popover({
+            tipClass: 'danger',
+            html: true,
+            animation: true,
+        });
+        //弹出层
+        $('#myPopover').popover({
+            tipClass: 'danger',
+            container: '#headingTwo',
+            html: true,
+            animation: true,
+            trigger: 'click',
+            placement: 'bottom',
+            title: "工作日志",
+            content: "<table class='table'><th>时间</th><th>工作内容</th><th>备注</th><tr><td>7-10</td><td>构图</td><td>构图</td></tr><tr><td>7-11</td><td>勾勒线条</td><td>构图</td></tr><tr><td>7-12</td><td>打草稿</td><td>构图</td></tr><tr><td>7-12</td><td>打草稿</td><td>构图</td></tr></table>"
+        });
+        //弹出层
+        $('#myPopover1').popover({
+            tipClass: 'danger',
+            container: '#headingTwo',
+            html: true,
+            animation: true,
+            trigger: 'click',
+            placement: 'bottom',
+            title: "工作日志",
+            content: '<div style="width: 500px;height: 500px;"><div style="width: 100%;height: 150px;"><div style="width: 100px;height: 150px;float: left;"><img src="__IMAGES__/avatar.jpg"  class="img-circle" style="margin-top: 20px;" width="100px" height="100px" alt=""></div><div style="width: 400px;height: 150px;float: right;"><p>姓名：张三</p><p>联系方式：1388888888</p><p></p></div></div><hr><div><table class="table" style="margin-top: 10px;width: 500px;height: 300px;<tr><th>1</th><th>2</th><th>3</th><th>4</th></tr><tr><td>测试数据</td><td>测试数据</td><td>测试数据</td><td>测试数据</td></tr><tr><td>测试数据</td><td>测试数据</td><td>测试数据</td><td>测试数据</td></tr><tr><td>测试数据</td><td>测试数据</td><td>测试数据</td><td>测试数据</td></tr><tr><td>测试数据</td><td>测试数据</td><td>测试数据</td><td>测试数据</td></tr></table></div></div>'
+        });
+
+        //羡慕进度
+        x = $("#myPopover").prev('b').offset();
+        $(".time-horizontal span").css("width", x.left * 2);
     });
 </script> {/block}
